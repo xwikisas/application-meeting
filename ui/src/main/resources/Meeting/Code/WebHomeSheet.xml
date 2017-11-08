@@ -46,5 +46,27 @@
 
 {{velocity}}
 #set($docextras = [])
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
+#set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
+#set ($columnsProperties = {
+  'doc.title': {"type":"text","size":10,"link":"view"},
+  'leader': {"type":"text","size":10,"html":true},
+  'place': {"type":"text","size":10},
+  'startDate': {"type":"text","size":10},
+  'durationString': {"type":"text","filterable":true,"sortable":false,"html":true},
+  'status': {"type":"list","size":10},
+  '_actions': {"sortable":false,"filterable":false,"html":true,"actions":["delete", "edit"]}
+})
+#set ($options = {
+  'className': 'Meeting.Code.MeetingClass',
+  'translationPrefix': 'meeting.livetable.',
+  'tagCloud': true,
+  'rowCount': 15,
+  'maxPages': 10,
+  'selectedColumn': 'doc.title',
+  'defaultOrder': 'asc'
+})
+#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'durationString', 'status', '_actions'])
+#livetable('meeting' $columns $columnsProperties $options)
 {{/velocity}}</content>
 </xwikidoc>

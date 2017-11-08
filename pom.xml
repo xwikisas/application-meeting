@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- *
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -19,62 +18,30 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.commons</groupId>
-    <artifactId>xwiki-commons-pom</artifactId>
-    <!-- The application meeting use the new Mail Sender API which bundled by default in XWiki Enterprise since 6.2M1 but a better version since 7.4.2-->
-    <version>7.4.2</version>
+    <groupId>com.xwiki.parent</groupId>
+    <artifactId>xwikisas-parent-platform</artifactId>
+    <version>8.5</version>
   </parent>
-  <groupId>org.xwiki.contrib</groupId>
+  <groupId>com.xwiki.meeting</groupId>
   <artifactId>application-meeting</artifactId>
   <packaging>pom</packaging>
   <name>Meeting application</name>
   <version>1.7-SNAPSHOT</version>
   <description>Organise meetings (create, view, modify) and send invitations</description>
   <properties>
-    <platform.version>${commons.version}</platform.version>
-    <rendering.version>${commons.version}</rendering.version>
-    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-    <xwiki.extension.features>tdelafosse:meeting-application</xwiki.extension.features>
-    <!-- Name to display by the Extension Manager -->
-    <xwiki.extension.name>Meeting Application</xwiki.extension.name>
+    <licensing.version>1.6</licensing.version>
   </properties>
-  <developers>
-    <developer>
-      <id>tdelafosse</id>
-      <name>Thomas Delafosse</name>
-    </developer>
-    <developer>
-      <id>vrachieru</id>
-      <name>Victor Rachieru</name>
-    </developer>
-    <developer>
-      <id>bandoulyes</id>
-      <name>Lyes Bandou</name>
-    </developer>
-    <developer>
-      <id>gabrielasmeria</id>
-      <name>Gabriela Smeria</name>
-    </developer>
-  </developers>
   <scm>
-    <connection>scm:git:git://github.com/xwiki-contrib/application-meeting.git</connection>
-    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-meeting.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/application-meeting/tree/master</url>
+    <connection>scm:git:https://github.com/xwikisas/application-meeting.git</connection>
+    <developerConnection>scm:git:https://github.com/xwikisas/application-meeting.git</developerConnection>
+    <url>https://github.com/xwikisas/application-meeting</url>
     <tag>HEAD</tag>
   </scm>
-  <distributionManagement>
-    <repository>
-      <id>xwiki-staging</id>
-      <name>XWiki Staging Repository</name>
-      <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
   <modules>
     <module>ui</module>
   </modules>
@@ -86,4 +53,21 @@
       </modules>
     </profile>
   </profiles>
+  <!-- Even though this repository is already declared in the parent POM, we still explicitly redeclare it for
+       convenience. This makes it simpler to build this project without having to declare this repository in one's own
+       Maven settings.xml file. In the future We may decide to remove this in the future and make it a rule to have the
+       XWiki SAS Nexus repository in one's settings.xml -->
+  <repositories>
+    <repository>
+      <id>public-store-releases</id>
+      <name>XWiki SAS Public Store Repository for Releases</name>
+      <url>https://nexus.xwiki.com/nexus/content/repositories/public-store-releases/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots> 
+    </repository>
+  </repositories>
 </project>
