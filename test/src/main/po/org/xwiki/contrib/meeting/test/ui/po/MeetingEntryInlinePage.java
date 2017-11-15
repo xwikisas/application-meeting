@@ -29,9 +29,21 @@ import org.xwiki.test.ui.po.InlinePage;
 
 /**
  * Represents the meeting entry inline page.
+ * 
+ * @version $Id$
  */
 public class MeetingEntryInlinePage extends InlinePage
 {
+    /**
+     * Value attribute name.
+     */
+    public static final String VALUE_ATTRIBUTE_NAME = "Value";
+
+    /**
+     * Suggest item class name.
+     */
+    public static final String SUGGEST_ITEM_CLASS_NAME = "suggestItem";
+
     /**
      * The meeting entry title input field.
      */
@@ -97,7 +109,7 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public String getTitle()
     {
-        return titleInput.getAttribute("Value");
+        return titleInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
@@ -116,7 +128,7 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public String getStartDate()
     {
-        return startDateInput.getAttribute("Value");
+        return startDateInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
@@ -175,7 +187,7 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public String getPlace()
     {
-        return placeInput.getAttribute("Value");
+        return placeInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
@@ -194,7 +206,7 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public String getDescription()
     {
-        return placeInput.getAttribute("Value");
+        return placeInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
@@ -213,7 +225,7 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public String getNotes()
     {
-        return notesInput.getAttribute("Value");
+        return notesInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
@@ -256,9 +268,9 @@ public class MeetingEntryInlinePage extends InlinePage
     {
         leaderInput.clear();
         leaderInput.sendKeys(leader);
-        getDriver().waitUntilElementIsVisible(By.className("suggestItem"));
-        getDriver().findElementWithoutWaiting(By.className("suggestItem")).click();
-        getDriver().waitUntilElementDisappears(By.className("suggestItem"));
+        getDriver().waitUntilElementIsVisible(By.className(SUGGEST_ITEM_CLASS_NAME));
+        getDriver().findElementWithoutWaiting(By.className(SUGGEST_ITEM_CLASS_NAME)).click();
+        getDriver().waitUntilElementDisappears(By.className(SUGGEST_ITEM_CLASS_NAME));
     }
 
     /**
@@ -270,9 +282,9 @@ public class MeetingEntryInlinePage extends InlinePage
     {
         for (String participant : participants) {
             participantsInput.sendKeys(participant);
-            getDriver().waitUntilElementIsVisible(By.className("suggestItem"));
-            getDriver().findElementWithoutWaiting(By.className("suggestItem")).click();
-            getDriver().waitUntilElementDisappears(By.className("suggestItem"));
+            getDriver().waitUntilElementIsVisible(By.className(SUGGEST_ITEM_CLASS_NAME));
+            getDriver().findElementWithoutWaiting(By.className(SUGGEST_ITEM_CLASS_NAME)).click();
+            getDriver().waitUntilElementDisappears(By.className(SUGGEST_ITEM_CLASS_NAME));
         }
     }
 }
