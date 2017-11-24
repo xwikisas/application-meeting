@@ -129,8 +129,9 @@
     </property>
     <property>
       <description>{{velocity}}
-  $services.localization.render('contrib.meeting.home.presentation')
-{{/velocity}}</description>
+  $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&gt;&gt;Meeting.CalendarView]]'])
+{{/velocity}}
+</description>
     </property>
   </object>
   <object>

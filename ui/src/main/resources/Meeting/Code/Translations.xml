@@ -77,7 +77,7 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>contrib.meeting.home.presentation=Welcome to the XWiki Meeting Application. Create your own meeting by clicking on "Add New Entry". You can also check out a [[**Calendar**&gt;&gt;Meeting.CalendarView]] of all the meetings.
+  <content>contrib.meeting.home.presentation=Welcome to the XWiki Meeting Application. Create your own meeting by clicking on "Add New Entry". You can also check out a {0}Calendar{1} of all the meetings.
 
 Meeting.MeetingClass_status_value1=In preparation
 Meeting.MeetingClass_status_value2=Active
