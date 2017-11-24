@@ -105,5 +105,8 @@ rendering.macro.nextmeetings.parameter.limit.description=Nombre maximum de réun
 rendering.macro.nextmeetings.parameter.limit.name=Nombre de réunions affichées
 rendering.macro.nextmeetings.parameter.status.description=Afficher le statut de la réunion. Les valeurs possibles sont "show" (afficher) et "hide" (cacher).
 rendering.macro.nextmeetings.parameter.status.name=Statut
-</content>
+
+# Template Provider
+templateProvider.meeting.name=Réunion
+templateProvider.meeting.description=Organiser un événement</content>
 </xwikidoc>
