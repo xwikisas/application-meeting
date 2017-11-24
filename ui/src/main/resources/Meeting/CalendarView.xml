@@ -20,24 +20,21 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc reference="Meeting.CalendarView" locale="">
+<xwikidoc version="1.3" reference="Meeting.CalendarView" locale="">
   <web>Meeting</web>
   <name>CalendarView</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Meeting.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1355132950000</creationDate>
-  <date>1355759699000</date>
-  <contentUpdateDate>1355759699000</contentUpdateDate>
+  <parent>Meeting.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1511513777000</date>
+  <contentUpdateDate>1511513777000</contentUpdateDate>
   <version>1.1</version>
   <title>$services.localization.render('contrib.meeting.calendarView.title')</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
