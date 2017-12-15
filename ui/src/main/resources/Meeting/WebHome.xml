@@ -39,12 +39,12 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{velocity}}
+  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
+
+{{velocity}}
 #set ($mainPageReference = $services.model.createDocumentReference('', ['Meeting', 'Code'], 'WebHomeSheet'))
 #if (!$services.licensing.licensor.hasLicensureForEntity($mainPageReference))
-  {{error}}
-    $services.localization.render('meeting.error.noValidLicense', ['[[', "&gt;&gt;path:$xwiki.getURL('XWiki.XWikiPreferences', 'admin', 'editor=globaladmin&amp;section=Licenses')]]"])
-  {{/error}}
+  {{error}}#getMissingLicenseMessage('meeting.extension.name'){{/error}}
 #end</content>
   <object>
     <name>Meeting.WebHome</name>

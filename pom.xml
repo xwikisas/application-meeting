@@ -34,7 +34,7 @@
   <version>1.8-SNAPSHOT</version>
   <description>Organise meetings (create, view, modify) and send invitations</description>
   <properties>
-    <licensing.version>1.7</licensing.version>
+    <licensing.version>1.8-SNAPSHOT</licensing.version>
   </properties>
   <scm>
     <connection>scm:git:https://github.com/xwikisas/application-meeting.git</connection>

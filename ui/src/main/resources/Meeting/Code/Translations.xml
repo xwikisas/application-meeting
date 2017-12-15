@@ -63,7 +63,7 @@ meeting.livetable.status=Status
 meeting.livetable.emptyvalue=-
 meeting.livetable._actions=Actions
 
-meeting.error.noValidLicense=There is no valid license for the Meeting Application (Pro). To get one, please visit the {0}Licenses section{1}.
+meeting.extension.name=Meeting Application (Pro)
 
 contrib.meeting.field.meetingTitle=Title
 contrib.meeting.field.leader=Leader
