@@ -19,9 +19,6 @@
  */
 package org.xwiki.contrib.meeting.test.ui.po;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -31,9 +28,6 @@ import org.xwiki.test.ui.po.ViewPage;
  */
 public class MeetingHomePage extends ViewPage
 {
-    @FindBy(xpath = "//a[@class = 'action add' and . = 'Add new entry']")
-    private WebElement addMeetingAppButton;
-
     /**
      * Opens the meeting home page.
      *
@@ -43,40 +37,5 @@ public class MeetingHomePage extends ViewPage
     {
         getUtil().gotoPage("Meeting", "WebHome");
         return new MeetingHomePage();
-    }
-
-    /**
-     * Click on the "Add new entry" link.
-     *
-     */
-    public void clickAddNewEntryLink()
-    {
-        addMeetingAppButton.click();
-    }
-
-    /**
-     * Set the title of the meeting.
-     * 
-     * @param name the name of the meeting.
-     */
-    public void setEntryName(String name)
-    {
-        WebElement nameInput = getDriver()
-            .findElementWithoutWaiting(By.xpath("//div[@id = 'entryNamePopup']//input[@type = 'text']"));
-        nameInput.clear();
-        nameInput.sendKeys(name);
-    }
-
-    /**
-     * Click on the "Add" button.
-     * 
-     * @return the entry inline page
-     */
-    public MeetingEntryInlinePage clickAddEntry()
-    {
-        WebElement addButton = getDriver()
-            .findElementWithoutWaiting(By.xpath("//div[@id = 'entryNamePopup']//input[@type = 'image']"));
-        addButton.click();
-        return new MeetingEntryInlinePage();
     }
 }

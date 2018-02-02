@@ -33,7 +33,7 @@ import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryPage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingHomePage;
 import org.xwiki.test.ui.AbstractTest;
 import org.xwiki.test.ui.SuperAdminAuthenticationRule;
-import org.xwiki.test.ui.po.ViewPage;
+import org.xwiki.test.ui.po.CreatePagePage;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
@@ -86,10 +86,13 @@ public class MeetingTest extends AbstractTest
 
         // Create new meeting
         MeetingHomePage meetingHomePage = MeetingHomePage.gotoPage();
-        meetingHomePage.clickAddNewEntryLink();
-        meetingHomePage.setEntryName("Meeting 01");
+        
+        CreatePagePage createPage = meetingHomePage.createPage();
+        createPage.getDocumentPicker().setTitle("Meeting 01");
+        createPage.setTemplate("Meeting.Code.MeetingTemplateProvider");
+        createPage.clickCreate();
 
-        MeetingEntryInlinePage meetingEntryInlinePage = meetingHomePage.clickAddEntry();
+        MeetingEntryInlinePage meetingEntryInlinePage = new MeetingEntryInlinePage();
         meetingEntryInlinePage.setTitle("Meeting 01");
         meetingEntryInlinePage.setStartDate(getDateTomorrow());
         meetingEntryInlinePage.setDurationHour("2");
@@ -105,7 +108,7 @@ public class MeetingTest extends AbstractTest
         participants.add("participant2 Doe");
         meetingEntryInlinePage.setParticipants(participants);
 
-        ViewPage viewPage = meetingEntryInlinePage.clickSaveAndView();
+        meetingEntryInlinePage.clickSaveAndView();
 
         MeetingEntryPage meetingEntryPage = new MeetingEntryPage();
 
