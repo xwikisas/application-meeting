@@ -190,7 +190,7 @@
           : $!doc.display('notes')
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome') &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
-            #if($doc.getValue('hasPoll') == 0)
+            #if($doc.getValue('hasPoll') != 1)
               &lt;form id="createXPoll" action='' method='get'&gt;
                 &lt;div class='presentation'&gt;
                   &lt;input type='hidden' name='createPoll' value='true'&gt;
