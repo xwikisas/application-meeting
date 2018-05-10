@@ -301,12 +301,17 @@
   #foreach($item in $results)
     #set($docReference = $services.model.resolveDocument($item))
     #set($document = $xwiki.getDocument($item))
+    #set ($docName = $document.name)
+    ## Handle document name for terminal pages.
+    #if ($docName == 'WebHome')
+      #set ($docName = $document.documentReference.lastSpaceReference.name)
+    #end
     #if($services.security.authorization.hasAccess('view', $docReference))
       (% class="list-unstyled" %)
         #if($xcontext.macro.params.status == 'show')
           #set($status = "- $services.localization.render('contrib.meeting.field.status') : $document.display('status', 'view')")
         #end
-        * $services.icon.render('time') (% class="text-muted" %) [[$document.name&gt;&gt;$item]] $document.display('startDate','view') $!status
+        * $services.icon.render('time') (% class="text-muted" %) [[$docName&gt;&gt;$item]] $document.display('startDate','view') $!status
     #end
   #end
 )))
