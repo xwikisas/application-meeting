@@ -41,10 +41,10 @@
   <hidden>true</hidden>
   <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
 Meeting.Code.MeetingClass_meetingTitle=Titre
-Meeting.MeetingClass_status_value1=En cours de préparation
-Meeting.MeetingClass_status_value2=Actif
-Meeting.MeetingClass_status_value3=Annulé
-Meeting.MeetingClass_status_value4=Fini
+Meeting.Code.MeetingClass_status_value1=En cours de préparation
+Meeting.Code.MeetingClass_status_value2=Actif
+Meeting.Code.MeetingClass_status_value3=Annulé
+Meeting.Code.MeetingClass_status_value4=Fini
 contrib.hr.notification.additionalPart=Son message\:
 contrib.meeting.app.title=Réunions
 contrib.meeting.calendarView=Vue calendaire
