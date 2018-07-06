@@ -102,14 +102,14 @@
   (((
     (% class="col-md-12 col-sm-12 col-xs-12" %)
     (((
-    ## Set the edit flag
     #if ($xcontext.action == 'edit')
+      ## Set the edit flag
       &lt;input name="Meeting.Code.MeetingClass_0_hasBeenEdited" type="hidden" value="1" /&gt;
-    #end
-    ## Add a title of event in edit modetime
-    #if($xcontext.action == 'edit')
-        ; &lt;label for="Meeting.Code.MeetingClass_0_meetingTitle"&gt;#if($services.icon)$services.icon.render('font') #end $escapetool.xml($doc.displayPrettyName('meetingTitle', false, false))&lt;/label&gt;
-        : $doc.display('meetingTitle')
+
+      ## Add a title of event in edit modetime
+      #set ($meetingTitleId = 'Meeting.Code.MeetingClass_0_meetingTitle')
+      ; &lt;label for=""&gt;$!services.icon.render('font') $services.localization.render('contrib.meeting.field.meetingTitle')&lt;/label&gt;
+      : &lt;input id="$meetingTitleId" name="$meetingTitleId" size="30" type="text" value="$escapetool.xml($request.title)"&gt;
     #end
     )))
   )))

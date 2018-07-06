@@ -47,7 +47,7 @@ public class MeetingEntryInlinePage extends InlinePage
     /**
      * The meeting entry title input field.
      */
-    @FindBy(xpath = "//div[@class = 'xform']//input[@name = 'title']")
+    @FindBy(id = "Meeting.Code.MeetingClass_0_meetingTitle")
     private WebElement titleInput;
 
     /**
