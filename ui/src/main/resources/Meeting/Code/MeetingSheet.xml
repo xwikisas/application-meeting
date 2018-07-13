@@ -126,14 +126,14 @@
     (((
     ; &lt;label for="Meeting.Code.MeetingClass_0_startDate"&gt;
         $!services.icon.render('calendar') $services.localization.render('contrib.meeting.field.startDate')
-      &lt;/label&gt;##
+      &lt;/label&gt;
     : $doc.display('startDate')
     )))
     (% class="col-xs-12 col-sm-4" %)
     (((
     ; &lt;label for="Meeting.Code.MeetingClass_0_calc"&gt;
         $!services.icon.render('clock') $services.localization.render('contrib.meeting.field.duration')
-      &lt;/label&gt;##
+      &lt;/label&gt;
     #if($xcontext.action == 'view')
       : $doc.display('durationString')
     #else
@@ -148,7 +148,7 @@
     (((
     ; &lt;label for="Meeting.Code.MeetingClass_0_status"&gt;
         $!services.icon.render('control_play') $services.localization.render('contrib.meeting.field.status')
-      &lt;/label&gt;##
+      &lt;/label&gt;
     #if($xcontext.action == 'view')
       : &lt;span class="label label-warning"&gt;$doc.display('status')&lt;/span&gt;
     #else
@@ -168,7 +168,7 @@
           #if ("$!doc.display('place')" != '')
             ; &lt;label for="Meeting.Code.MeetingClass_0_place"&gt;
                 $!services.icon.render('map') $services.localization.render('contrib.meeting.field.place')
-              &lt;/label&gt;##
+              &lt;/label&gt;
             : $doc.display('place')
           #end
         )))
@@ -247,7 +247,7 @@
       #if ($xcontext.action == 'edit' || "$!doc.getValue('groups')" != '')
         ; &lt;label for="Meeting.Code.MeetingClass_0_groups"&gt;
             $!services.icon.render('group') $services.localization.render('contrib.meeting.field.groups')
-          &lt;/label&gt;##
+          &lt;/label&gt;
         : $doc.display('groups')
       #end
       #set($participants = {})
