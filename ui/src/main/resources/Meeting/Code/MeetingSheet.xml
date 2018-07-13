@@ -248,7 +248,7 @@
           &lt;div class='presentation'&gt;
             &lt;input type='hidden' name='sendNotification' value='true'&gt;
             &lt;input type='hidden' name='doc' value="$services.model.serialize($doc.documentReference, 'default')"&gt;
-            &lt;label for='additionalMessage'&gt;$services.localization.render('contrib.meeting.notification.additionalMessage')&lt;/label&gt;&lt;br/&gt;
+            ; &lt;label for='additionalMessage'&gt;$services.localization.render('contrib.meeting.notification.additionalMessage')&lt;/label&gt;&lt;br/&gt;
             &lt;textarea name="additionalMessage" cols='40' rows='4'&gt;&lt;/textarea&gt;&lt;br/&gt;
             #if($doc.getValue('lastEmailSent'))
               &lt;p&gt;$services.localization.render('contrib.meeting.field.lastEmailSent') &lt;b&gt;$doc.display('lastEmailSent')&lt;/b&gt;&lt;/p&gt;
