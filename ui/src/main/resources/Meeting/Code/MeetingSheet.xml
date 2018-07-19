@@ -125,7 +125,7 @@
     (% class="col-xs-12 col-sm-4" %)
     (((
     #if ($xcontext.action == 'edit' || "$!doc.getValue('startDate')" != '')
-      ; &lt;label for="Meeting.Code.MeetingClass_0_startDate"&gt;
+      ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_startDate"#end&gt;
           $!services.icon.render('calendar') $services.localization.render('contrib.meeting.field.startDate')
         &lt;/label&gt;
       : $doc.display('startDate')
@@ -134,7 +134,7 @@
     (% class="col-xs-12 col-sm-4" %)
     (((
     #if ($xcontext.action == 'edit' || "$!doc.getValue('durationString')" != '')
-      ; &lt;label for="Meeting.Code.MeetingClass_0_calc"&gt;
+      ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_calc"#end&gt;
           $!services.icon.render('clock') $services.localization.render('contrib.meeting.field.duration')
         &lt;/label&gt;
       #if($xcontext.action == 'view')
@@ -151,7 +151,7 @@
     (% class="col-xs-12 col-sm-4" %)
     (((
     #if ($xcontext.action == 'edit' || "$!doc.getValue('status')" != '')
-      ; &lt;label for="Meeting.Code.MeetingClass_0_status"&gt;
+      ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_status"#end&gt;
           $!services.icon.render('control_play') $services.localization.render('contrib.meeting.field.status')
         &lt;/label&gt;
       #if($xcontext.action == 'view')
@@ -172,7 +172,7 @@
         (% class="col-md-6 col-sm-6 col-xs-12" %)
         (((
           #if ("$!doc.display('place')" != '')
-            ; &lt;label for="Meeting.Code.MeetingClass_0_place"&gt;
+            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_place"#end&gt;
                 $!services.icon.render('map') $services.localization.render('contrib.meeting.field.place')
               &lt;/label&gt;
             : $doc.display('place')
@@ -199,7 +199,7 @@
           #end
           ## description
           #if ($xcontext.action == 'edit' || "$!doc.getValue('description')" != '')
-            ; &lt;label for="Meeting.Code.MeetingClass_0_description"&gt;
+            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_description"#end&gt;
                 $!services.icon.render('application_view_list')
                 $services.localization.render('contrib.meeting.field.description')
               &lt;/label&gt;
@@ -207,7 +207,7 @@
           #end
           ## notes
           #if ($xcontext.action == 'edit' || "$!doc.getValue('notes')" != '')
-            ; &lt;label for="Meeting.Code.MeetingClass_0_notes"&gt;
+            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_notes"#end&gt;
                 $!services.icon.render('application_view_list') $services.localization.render('contrib.meeting.field.notes')
               &lt;/label&gt;
             : $!doc.display('notes')
@@ -245,21 +245,21 @@
     (((
       ## leader
       #if ($xcontext.action == 'edit' || "$!doc.getValue('leader')" != '')
-        ; &lt;label for="Meeting.Code.MeetingClass_0_leader"&gt;
+        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_leader"#end&gt;
             $!services.icon.render('user') $services.localization.render('contrib.meeting.field.leader')
           &lt;/label&gt;
         : $doc.display('leader')
       #end
       ## participants
       #if ($xcontext.action == 'edit' || "$!doc.getValue('participants')" != '')
-        ; &lt;label for="Meeting.Code.MeetingClass_0_participants"&gt;
+        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_participants"#end&gt;
             $!services.icon.render('user') $services.localization.render('contrib.meeting.field.participants')
           &lt;/label&gt;
         : $doc.display('participants')
       #end
       ## groups
       #if ($xcontext.action == 'edit' || "$!doc.getValue('groups')" != '')
-        ; &lt;label for="Meeting.Code.MeetingClass_0_groups"&gt;
+        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_groups"#end&gt;
             $!services.icon.render('group') $services.localization.render('contrib.meeting.field.groups')
           &lt;/label&gt;
         : $doc.display('groups')
