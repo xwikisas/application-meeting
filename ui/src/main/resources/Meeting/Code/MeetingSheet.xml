@@ -108,7 +108,7 @@
   $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
 ##if ($doc.getObject('Meeting.Code.MeetingClass'))
-#set ($job = $doc.getObject('Meeting.Code.MeetingClass'))
+#set ($obj = $doc.getObject('Meeting.Code.MeetingClass'))
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 (% class="xform" %)
 (((
@@ -139,7 +139,7 @@
   (((
     (% class="col-xs-12 col-sm-4" %)
     (((
-    #displayMeetingProperty($job 'startDate' 'calendar')
+    #displayMeetingProperty($obj 'startDate' 'calendar')
     )))
     (% class="col-xs-12 col-sm-4" %)
     (((
@@ -181,7 +181,7 @@
       (((
         (% class="col-md-6 col-sm-6 col-xs-12" %)
         (((
-          #displayMeetingProperty($job 'place' 'map')
+          #displayMeetingProperty($obj 'place' 'map')
         )))
         (% class="col-md-6 col-sm-6 col-xs-12" %)
         (((
@@ -203,9 +203,9 @@
             )))&lt;br/&gt;
           #end
           ## description
-          #displayMeetingProperty($job 'description' 'application_view_list')
+          #displayMeetingProperty($obj 'description' 'application_view_list')
           ## notes
-          #displayMeetingProperty($job 'notes' 'application_view_list')
+          #displayMeetingProperty($obj 'notes' 'application_view_list')
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome') &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
             #if($doc.getValue('hasPoll') != 1)
@@ -238,11 +238,11 @@
     (% class="col-xs-12 col-sm-4" %)
     (((
       ## leader
-      #displayMeetingProperty($job 'leader' 'user')
+      #displayMeetingProperty($obj 'leader' 'user')
       ## participants
-      #displayMeetingProperty($job 'participants' 'user')
+      #displayMeetingProperty($obj 'participants' 'user')
       ## groups
-      #displayMeetingProperty($job 'groups' 'group')
+      #displayMeetingProperty($obj 'groups' 'group')
 
       #set($participants = {})
       #getParticipants($doc $participants)
