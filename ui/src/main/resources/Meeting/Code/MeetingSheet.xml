@@ -41,6 +41,19 @@
   <hidden>true</hidden>
   <content>{{include reference="Meeting.Code.Macros"/}}
 
+{{velocity output='false'}}
+#macro (displayMeetingProperty $obj $propName $iconName)
+  #set ($class = $obj.xWikiClass)
+  #set ($prettyName = $class.get($propName).translatedPrettyName)
+  #if ($xcontext.action == 'edit' || "$!doc.getValue($propName)" != '')
+  ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_${propName}"#end&gt;
+      $!services.icon.render($iconName) $services.localization.render("contrib.meeting.field.${propName}")
+    &lt;/label&gt;
+  : $doc.display($propName)
+  #end
+#end
+{{/velocity}}
+
 {{velocity}}
 {{html wiki='true' clean='false'}}
 #set($discard = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
@@ -94,6 +107,9 @@
   #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $title))
   $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
+
+###if ($doc.getObject('XWiki.SchedulerJobClass'))
+#set ($job = $doc.getObject('Meeting.Code.MeetingClass'))
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 (% class="xform" %)
 (((
@@ -124,12 +140,7 @@
   (((
     (% class="col-xs-12 col-sm-4" %)
     (((
-    #if ($xcontext.action == 'edit' || "$!doc.getValue('startDate')" != '')
-      ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_startDate"#end&gt;
-          $!services.icon.render('calendar') $services.localization.render('contrib.meeting.field.startDate')
-        &lt;/label&gt;
-      : $doc.display('startDate')
-    #end
+    #displayMeetingProperty($job 'startDate' 'calendar')
     )))
     (% class="col-xs-12 col-sm-4" %)
     (((
@@ -171,12 +182,7 @@
       (((
         (% class="col-md-6 col-sm-6 col-xs-12" %)
         (((
-          #if ("$!doc.display('place')" != '')
-            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_place"#end&gt;
-                $!services.icon.render('map') $services.localization.render('contrib.meeting.field.place')
-              &lt;/label&gt;
-            : $doc.display('place')
-          #end
+          #displayMeetingProperty($job 'place' 'map')
         )))
         (% class="col-md-6 col-sm-6 col-xs-12" %)
         (((
@@ -198,20 +204,9 @@
             )))&lt;br/&gt;
           #end
           ## description
-          #if ($xcontext.action == 'edit' || "$!doc.getValue('description')" != '')
-            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_description"#end&gt;
-                $!services.icon.render('application_view_list')
-                $services.localization.render('contrib.meeting.field.description')
-              &lt;/label&gt;
-            : $!doc.display('description')
-          #end
+          #displayMeetingProperty($job 'description' 'application_view_list')
           ## notes
-          #if ($xcontext.action == 'edit' || "$!doc.getValue('notes')" != '')
-            ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_notes"#end&gt;
-                $!services.icon.render('application_view_list') $services.localization.render('contrib.meeting.field.notes')
-              &lt;/label&gt;
-            : $!doc.display('notes')
-          #end
+          #displayMeetingProperty($job 'notes' 'application_view_list')
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome') &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
             #if($doc.getValue('hasPoll') != 1)
@@ -244,26 +239,11 @@
     (% class="col-xs-12 col-sm-4" %)
     (((
       ## leader
-      #if ($xcontext.action == 'edit' || "$!doc.getValue('leader')" != '')
-        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_leader"#end&gt;
-            $!services.icon.render('user') $services.localization.render('contrib.meeting.field.leader')
-          &lt;/label&gt;
-        : $doc.display('leader')
-      #end
+      #displayMeetingProperty($job 'leader' 'user')
       ## participants
-      #if ($xcontext.action == 'edit' || "$!doc.getValue('participants')" != '')
-        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_participants"#end&gt;
-            $!services.icon.render('user') $services.localization.render('contrib.meeting.field.participants')
-          &lt;/label&gt;
-        : $doc.display('participants')
-      #end
+      #displayMeetingProperty($job 'participants' 'user')
       ## groups
-      #if ($xcontext.action == 'edit' || "$!doc.getValue('groups')" != '')
-        ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_groups"#end&gt;
-            $!services.icon.render('group') $services.localization.render('contrib.meeting.field.groups')
-          &lt;/label&gt;
-        : $doc.display('groups')
-      #end
+      #displayMeetingProperty($job 'groups' 'group')
 
       #set($participants = {})
       #getParticipants($doc $participants)
