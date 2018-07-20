@@ -107,8 +107,7 @@
   #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $title))
   $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
-
-###if ($doc.getObject('XWiki.SchedulerJobClass'))
+##if ($doc.getObject('Meeting.Code.MeetingClass'))
 #set ($job = $doc.getObject('Meeting.Code.MeetingClass'))
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 (% class="xform" %)
