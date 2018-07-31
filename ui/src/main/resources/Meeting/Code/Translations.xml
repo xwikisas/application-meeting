@@ -39,7 +39,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>contrib.meeting.home.presentation=Welcome to the XWiki Meeting Application. Create your own meeting by clicking on "Add New Entry". You can also check out a {0}Calendar{1} of all the meetings.
+  <content>contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
 
 contrib.meeting.app.title=Meetings
 contrib.meeting.home.title=Meetings
