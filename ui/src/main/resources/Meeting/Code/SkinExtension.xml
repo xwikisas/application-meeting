@@ -138,20 +138,16 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>form .presentation
-{
-  margin-top:15px;
-  
+      <code>form .presentation {
+  margin-top: 15px;
 }
 
-#sendNotification textarea
-{
-   width:90% ;
-}
-
-#durationEdit select{
-   width:auto ;
+#durationEdit select {
+   width: auto;
 }</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
     </property>
     <property>
       <name>Presentation</name>
