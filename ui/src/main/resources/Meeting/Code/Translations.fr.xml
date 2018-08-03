@@ -64,6 +64,7 @@ contrib.meeting.field.groups=Groupes participants
 contrib.meeting.field.place=Lieu
 contrib.meeting.field.startDate=Date de début
 contrib.meeting.field.status=Statut
+contrib.meeting.field.message=Message
 contrib.meeting.home.presentation=Utilisez cette application pour organiser des réunions, envoyer des invitations et avoir une vue {0}calendaire{1} de toutes les réunions.
 contrib.meeting.home.title=Réunions
 contrib.meeting.map.error.deactivation=La carte n'a pas été affichée\:
