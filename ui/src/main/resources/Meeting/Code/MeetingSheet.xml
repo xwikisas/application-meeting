@@ -265,9 +265,8 @@
                 &lt;/span&gt;
               &lt;/label&gt;
             #end
-            &lt;div class='btn'&gt;
-              &lt;input type='submit' class='btn btn-primary' value="$services.localization.render('contrib.meeting.notification.submit')"/&gt;
-            &lt;/div&gt;
+
+            &lt;input type='submit' class='btn btn-primary' value="$services.localization.render('contrib.meeting.notification.submit')"/&gt;
           &lt;/div&gt;
         &lt;/form&gt;
       #end
