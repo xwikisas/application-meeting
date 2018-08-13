@@ -251,16 +251,22 @@
           &lt;div class='presentation'&gt;
             &lt;input type='hidden' name='sendNotification' value='true'&gt;
             &lt;input type='hidden' name='doc' value="$services.model.serialize($doc.documentReference, 'default')"&gt;
-            &lt;label for='additionalMessage'&gt;
-                $services.localization.render('contrib.meeting.notification.additionalMessage')
+            ; &lt;label for='additionalMessage'&gt;
+                $!services.icon.render('email') $services.localization.render('contrib.meeting.field.message')
+                &lt;span class="xHint"&gt;
+                  $services.localization.render('contrib.meeting.notification.additionalMessage')
+                &lt;/span&gt;
               &lt;/label&gt;
-            &lt;textarea name="additionalMessage" id="additionalMessage" cols='40' rows='4'&gt;&lt;/textarea&gt;
+            : &lt;textarea name="additionalMessage" id="additionalMessage" cols='40' rows='4'&gt;&lt;/textarea&gt;
             #if($doc.getValue('lastEmailSent'))
-              &lt;p&gt;$services.localization.render('contrib.meeting.field.lastEmailSent') &lt;b&gt;$doc.display('lastEmailSent')&lt;/b&gt;&lt;/p&gt;
+               &lt;label&gt;
+              &lt;span class="xHint"&gt;
+                $services.localization.render('contrib.meeting.field.lastEmailSent') &lt;b&gt;$doc.display('lastEmailSent')&lt;/b&gt;
+                &lt;/span&gt;
+              &lt;/label&gt;
             #end
-            &lt;span class='buttonwrapper'&gt;
-              &lt;input type='submit' class='button' value="$services.localization.render('contrib.meeting.notification.submit')"/&gt;
-            &lt;/span&gt;
+
+            &lt;input type='submit' class='btn btn-primary' value="$services.localization.render('contrib.meeting.notification.submit')"/&gt;
           &lt;/div&gt;
         &lt;/form&gt;
       #end
