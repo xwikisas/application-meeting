@@ -52,13 +52,13 @@
   : $doc.display($propName)
   #end
 #end
-#macro (setTitle)
+#macro (setPollTitle)
   #set($meetingName = $doc.name)
   #set($defaultDocName = $services.model.getEntityReference('DOCUMENT', 'default').name)
   #if($meetingName == $defaultDocName)
     #set($meetingName = $doc.documentReference.lastSpaceReference.name)
   #end
-  #set($title="XPoll for the Meeting $meetingName")
+  #set($pollName="XPoll for the Meeting $meetingName")
 #end
 {{/velocity}}
 
@@ -111,8 +111,8 @@
 #if($request.createPoll == 'true')
   #set($discard = $doc.set('hasPoll', 1))
   #set($discard = $doc.saveAsAuthor())
-  #setTitle()
-  #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $title))
+  #setPollTitle()
+  #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $pollName))
   $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
 ##if ($doc.getObject('Meeting.Code.MeetingClass'))
@@ -228,8 +228,8 @@
                 &lt;/div&gt;
               &lt;/form&gt;
             #else
-              #setTitle()
-              #set($url = $xwiki.getURL("XPoll.$title"))
+              #setPollTitle()
+              #set($url = $xwiki.getURL("XPoll.$pollName"))
               &lt;form action=$url method='post'&gt;
                 &lt;div class='presentation'&gt;
                   &lt;p&gt;&lt;label&gt;$services.localization.render('contrib.meeting.poll.explanation')&lt;/label&gt;&lt;/p&gt;
