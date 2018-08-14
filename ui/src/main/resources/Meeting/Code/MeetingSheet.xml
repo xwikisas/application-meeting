@@ -52,7 +52,7 @@
   : $doc.display($propName)
   #end
 #end
-#macro (setPollTitle)
+#macro (setPollName)
   #set($meetingName = $doc.name)
   #set($defaultDocName = $services.model.getEntityReference('DOCUMENT', 'default').name)
   #if($meetingName == $defaultDocName)
@@ -111,7 +111,7 @@
 #if($request.createPoll == 'true')
   #set($discard = $doc.set('hasPoll', 1))
   #set($discard = $doc.saveAsAuthor())
-  #setPollTitle()
+  #setPollName()
   #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $pollName))
   $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
@@ -228,7 +228,7 @@
                 &lt;/div&gt;
               &lt;/form&gt;
             #else
-              #setPollTitle()
+              #setPollName()
               #set($url = $xwiki.getURL("XPoll.$pollName"))
               &lt;form action=$url method='post'&gt;
                 &lt;div class='presentation'&gt;
