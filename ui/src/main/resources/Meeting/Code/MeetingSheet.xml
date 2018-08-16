@@ -209,7 +209,7 @@
               &amp;&amp; $doc.getValue('displayMap') == 1
               &amp;&amp; "${doc.getValue('place')}" != '')
             (((
-              {{map location="$doc.getValue('place')" width="500" height="300" errors="hide"}}$doc.display('place'){{/map}}
+            {{map location="$doc.getValue('place')" width="500" height="300" errors="hide"}}$doc.display('place'){{/map}}
             )))&lt;br/&gt;
           #end
           ## description
@@ -244,7 +244,8 @@
                     &lt;/label&gt;
                   &lt;/p&gt;
                   &lt;span class='buttonwrapper'&gt;
-                    &lt;input type='submit' class='button' value="$services.localization.render('contrib.meeting.poll.go')"/&gt;
+                    &lt;input type='submit' class='button'
+                        value="$services.localization.render('contrib.meeting.poll.go')"/&gt;
                   &lt;/span&gt;
                 &lt;/div&gt;
               &lt;/form&gt;
