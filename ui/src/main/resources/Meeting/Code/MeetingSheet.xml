@@ -205,8 +205,7 @@
       (((
         (% class="col-sm-12 col-xs-12" %)
         (((
-          #if($xcontext.action == 'view'
-              &amp;&amp; $doc.getValue('displayMap') == 1
+          #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('displayMap') == 1
               &amp;&amp; "${doc.getValue('place')}" != '')
             (((
             {{map location="$doc.getValue('place')" width="500" height="300" errors="hide"}}$doc.display('place'){{/map}}
@@ -217,10 +216,8 @@
           ## notes
           #displayMeetingProperty($obj 'notes' 'application_view_list')
           ## poll
-          #if($doc.isCurrentUserCreator()
-              &amp;&amp; $xwiki.exists('XPoll.WebHome')
-              &amp;&amp; $doc.getValue('status') == 'value1'
-              &amp;&amp; $xcontext.action == 'view')
+          #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
+              &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
             #if($doc.getValue('hasPoll') != 1)
               &lt;form id="createXPoll" action='' method='get'&gt;
                 &lt;div class='presentation'&gt;
