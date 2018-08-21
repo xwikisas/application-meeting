@@ -218,6 +218,12 @@
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
               &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
+            #if($doc.getValue('hasPoll') == 1)
+              #setPollName()
+              #if(!($xwiki.exists("XPoll.$pollName")))
+                #set($discard = $doc.set('hasPoll', 0))
+              #end
+            #end
             #if($doc.getValue('hasPoll') != 1)
               &lt;form id="createXPoll" action='' method='get'&gt;
                 &lt;div class='presentation'&gt;
@@ -231,7 +237,6 @@
                 &lt;/div&gt;
               &lt;/form&gt;
             #else
-              #setPollName()
               #set($url = $xwiki.getURL("XPoll.$pollName"))
               &lt;form action=$url method='post'&gt;
                 &lt;div class='presentation'&gt;
