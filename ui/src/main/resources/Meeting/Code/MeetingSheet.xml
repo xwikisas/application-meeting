@@ -61,9 +61,8 @@
   #set($pollName="XPoll for the Meeting $meetingName")
 #end
 #macro (checkHasPoll $pollName)
-  #if(!($xwiki.exists("XPoll.$pollName")))
-    #set($hasPoll = '0')
-  #else
+  #set($hasPoll = '0')
+  #if($xwiki.exists("XPoll.$pollName"))
     #set($hasPoll = '1')
   #end
 #end
