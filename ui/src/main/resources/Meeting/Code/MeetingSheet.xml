@@ -61,9 +61,9 @@
   #set($pollName="XPoll for the Meeting $meetingName")
 #end
 #macro (checkHasPoll $pollName)
-  #set($hasPoll = '0')
+  #set($hasPoll = false)
   #if($xwiki.exists("XPoll.$pollName"))
-    #set($hasPoll = '1')
+    #set($hasPoll = true)
   #end
 #end
 {{/velocity}}
@@ -225,7 +225,7 @@
               &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
             #setPollName()
             #checkHasPoll($pollName)
-            #if($hasPoll != 1)
+            #if(!$hasPoll)
               &lt;form id="createXPoll" action='' method='get'&gt;
                 &lt;div class='presentation'&gt;
                   &lt;input type='hidden' name='createPoll' value='true'&gt;
