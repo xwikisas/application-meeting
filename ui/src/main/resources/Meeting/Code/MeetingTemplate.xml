@@ -245,20 +245,6 @@ $durationString
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </hasBeenEdited>
-      <hasPoll>
-        <customDisplay/>
-        <defaultValue/>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType/>
-        <name>hasPoll</name>
-        <number>11</number>
-        <prettyName>hasPoll</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </hasPoll>
       <lastEmailSent>
         <customDisplay/>
         <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
@@ -296,7 +282,7 @@ $durationString
         <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
       </leader>
       <meetingTitle>
-        <customDisplay>{{include reference="AppWithinMinutes.Title"/}}</customDisplay>
+        <customDisplay/>
         <disabled>0</disabled>
         <name>meetingTitle</name>
         <number>1</number>
@@ -425,7 +411,9 @@ $durationString
       <durationMinutes>15</durationMinutes>
     </property>
     <property>
-      <durationString>{{html clean="false" wiki="false"}}&lt;p&gt;15 min&lt;/p&gt;{{/html}}</durationString>
+      <durationString>{{html clean="false" wiki="false"}}
+&lt;p&gt;15 min&lt;/p&gt;
+{{/html}}</durationString>
     </property>
     <property>
       <groups/>
@@ -434,13 +422,13 @@ $durationString
       <hasBeenEdited>0</hasBeenEdited>
     </property>
     <property>
-      <hasPoll/>
-    </property>
-    <property>
-      <lastEmailSent>2016-07-07 15:45:15.987</lastEmailSent>
+      <lastEmailSent/>
     </property>
     <property>
       <leader/>
+    </property>
+    <property>
+      <meetingTitle/>
     </property>
     <property>
       <notes/>

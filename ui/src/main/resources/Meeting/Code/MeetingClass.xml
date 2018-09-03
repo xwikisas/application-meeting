@@ -240,20 +240,6 @@ $durationString
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </hasBeenEdited>
-    <hasPoll>
-      <customDisplay/>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>select</displayFormType>
-      <displayType/>
-      <name>hasPoll</name>
-      <number>11</number>
-      <prettyName>hasPoll</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </hasPoll>
     <lastEmailSent>
       <customDisplay/>
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>

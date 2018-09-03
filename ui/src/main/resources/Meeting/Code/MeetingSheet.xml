@@ -60,6 +60,12 @@
   #end
   #set($pollName="XPoll for the Meeting $meetingName")
 #end
+#macro (checkHasPoll $pollName)
+  #set($hasPoll = false)
+  #if($xwiki.exists("XPoll.$pollName"))
+    #set($hasPoll = true)
+  #end
+#end
 {{/velocity}}
 
 {{velocity}}
@@ -109,7 +115,6 @@
   #end
 #end
 #if($request.createPoll == 'true')
-  #set($discard = $doc.set('hasPoll', 1))
   #set($discard = $doc.saveAsAuthor())
   #setPollName()
   #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $pollName))
@@ -218,7 +223,9 @@
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
               &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
-            #if($doc.getValue('hasPoll') != 1)
+            #setPollName()
+            #checkHasPoll($pollName)
+            #if(!$hasPoll)
               &lt;form id="createXPoll" action='' method='get'&gt;
                 &lt;div class='presentation'&gt;
                   &lt;input type='hidden' name='createPoll' value='true'&gt;
@@ -231,7 +238,6 @@
                 &lt;/div&gt;
               &lt;/form&gt;
             #else
-              #setPollName()
               #set($url = $xwiki.getURL("XPoll.$pollName"))
               &lt;form action=$url method='post'&gt;
                 &lt;div class='presentation'&gt;
