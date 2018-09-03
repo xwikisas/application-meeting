@@ -422,7 +422,7 @@ $durationString
       <hasBeenEdited>0</hasBeenEdited>
     </property>
     <property>
-      <lastEmailSent>2016-07-07 15:45:00.0</lastEmailSent>
+      <lastEmailSent/>
     </property>
     <property>
       <leader/>
@@ -440,7 +440,7 @@ $durationString
       <place/>
     </property>
     <property>
-      <startDate>9999-12-31 00:00:00.0</startDate>
+      <startDate/>
     </property>
     <property>
       <status>value1</status>
