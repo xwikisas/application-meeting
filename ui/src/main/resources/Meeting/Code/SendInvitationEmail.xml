@@ -42,8 +42,11 @@
   <content>{{include reference="Meeting.Code.Macros"/}}
 {{velocity wiki="false"}}#set ($discard = $response.setContentType('application/json'))
 #if ($request.sendNotification == 'true')
+  #set ($currentUserName = $xwiki.getUserName($xcontext.user, false))
+  #set ($currentUserLink = $xwiki.getDocument($$xcontext.user).externalURL)
   #set ($meetingDoc = $xwiki.getDocument($request.doc))
-  #set ($message = $services.localization.render('contrib.meeting.notification.body', ["$xwiki.getUserName($xcontext.user)","&lt;strong&gt;$meetingDoc.title&lt;/strong&gt;"]))
+  #set ($message = $services.localization.render('contrib.meeting.notification.body',
+      ["&lt;a href='$currentUserLink'&gt;$currentUserName&lt;/a&gt;","&lt;strong&gt;$meetingDoc.title&lt;/strong&gt;"]))
 
   #if ("$!request.additionalMessage" != '')
     #set ($message = "$message &lt;br&gt; $services.localization.render('contrib.hr.notification.additionalPart') $request.additionalMessage")
@@ -56,11 +59,10 @@
   #getParticipants($meetingDoc, $participants)
   ## Retrieve default From email
   #set ($serverName = "$!request.serverName")
-  #set ($curentUserName = $xwiki.getUserName($xcontext.user, false))
   #if ($serverName != '')
-    #set ($sender = "$!{escapetool.xml($curentUserName)} &lt;no-reply@$!{serverName}&gt;")
+    #set ($sender = "$!{escapetool.xml($currentUserName)} &lt;no-reply@$!{serverName}&gt;")
   #else
-    #set ($sender = "$!{escapetool.xml($curentUserName)} &lt;no-reply@xwiki.localdomain.com&gt;")
+    #set ($sender = "$!{escapetool.xml($currentUserName)} &lt;no-reply@xwiki.localdomain.com&gt;")
   #end
   #set ($defaultMail = $xwiki.getXWikiPreference('admin_email', "$sender"))
   #set ($mailmsg = $services.mailsender.createMessage($defaultMail, $participants.to, $title))
