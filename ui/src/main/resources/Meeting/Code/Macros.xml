@@ -41,6 +41,7 @@
   <hidden>true</hidden>
   <content>{{velocity output=false}}
 #macro(addMember $member $memberReference $list)
+  ## Mermber references are checked in order to also manage the subwikis members.
   #if ($member != '' &amp;&amp; $xwiki.exists($memberReference) &amp;&amp; !$list.contains($memberReference))
     #set ($discard = $list.add($memberReference))
   #end
@@ -51,11 +52,12 @@
   #set ($icsParticipants = '')
   #foreach ($member in $list)
     #set ($email = $xwiki.getUserName($member, '$email', false))
-    #set ($name = $xwiki.getUserName($member, false))
+    ## Serialize the member, in order to provide a valid CN value, to avoid breaking the calendar event.
+    #set ($name = $xwiki.getUserName($services.model.serialize($member), false))
     #if ("$!email" != '')
       #set ($icsParticipantsString = "ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;CN=${name};X-NUM-GUESTS=0:mailto:${email}")
       #if ($foreach.index == 0)
-        #set ($to = "$email") 
+        #set ($to = "$email")
         #set ($icsParticipants = "$icsParticipantsString")
       #else
         #set ($to = "$to, $email")
