@@ -101,7 +101,7 @@
   #set($discard = $calendar.add(12, $util.parseInt($meetingDoc.getValue('duration'))))
   #set($endDate = $calendar.getTime())
 
-  #set($dateFormat = "yyyyMMdd'T'HHmmss'Z'")
+  #set($dateFormat = "yyyyMMdd'T'HHmmss")
 
   #set($discard = $dates.put('smodDate', $!{datetool.format($dateFormat, $meetingDoc.date)}))
   #set($discard = $dates.put('sstartDate', $!{datetool.format($dateFormat, $startDate)}))
@@ -126,15 +126,16 @@
 #macro (getVCalendarContent $meetingDoc $vCalendar)
   #set($meeting = {})
   #getMeetingInfos($meetingDoc, $meeting)
+  #set($timezoneId = $datetool.timeZone.ID)
   #set($vCalendar = "
     BEGIN:VCALENDAR
     METHOD:REQUEST
     PRODID: Meeting
     VERSION:2.0
     BEGIN:VEVENT
-    DTSTAMP:$!{meeting.dates.smodDate}
-    DTSTART:$!{meeting.dates.sstartDate}
-    DTEND:$!{meeting.dates.sendDate}
+    DTSTAMP;TZID=$timezoneId:$!{meeting.dates.smodDate}
+    DTSTART;TZID=$timezoneId:$!{meeting.dates.sstartDate}
+    DTEND;TZID=$timezoneId:$!{meeting.dates.sendDate}
     SUMMARY:$!{meetingDoc.title}
     UID:$!{meetingDoc.id}
     $!{meeting.participants.icsParticipants}
