@@ -47,6 +47,8 @@ contrib.meeting.calendarView=Calendar View
 contrib.meeting.calendarView.title=Calendar View
 contrib.meeting.calendarView.noMacro.admin=To display the calendar view of the meetings, you need to install the Full Calendar Macro on this wiki :
 contrib.meeting.calendarView.noMacro.noAdmin=We are missing the macro displaying the calendar view. Ask this wiki administrator to install the "FullCalendar" Macro.
+meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link to complete the migration:
+meeting.migrations.button=Execute the modification
 
 meeting.livetable.doc.title=Meeting
 meeting.livetable.doc.name=Title
