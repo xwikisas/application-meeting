@@ -47,8 +47,9 @@
   #set($meetDoc = $xwiki.getDocument($meet))
   #set($meetObj = $meetDoc.getObject('Meeting.Code.MeetingClass'))
   #set($durationString = $meetObj.getProperty('durationString').value)
-  #if ($!durationString)
+  #if ($durationString)
     #set($migrationNeeded = true)
+    #break
   #end
 #end
 #if($migrationNeeded)
