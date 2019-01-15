@@ -47,7 +47,7 @@
   #if ("$!wikiPrettyName.trim()" == '')
     #set ($wikiPrettyName = $w)
   #end
-  #if ($meetingClassDoc) ##&amp;&amp; !$meetingClassDoc.isNew())
+  #if ($meetingClassDoc)
     #set($allMeetings = $services.query.xwql("from doc.object(${meetingClass}) as meeting order by doc.fullName asc").setWiki($w).addFilter('unique').execute())
 
     $services.localization.render('meeting.migrations.wiki') $wikiPrettyName
