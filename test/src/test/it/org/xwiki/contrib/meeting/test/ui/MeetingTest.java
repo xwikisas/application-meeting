@@ -95,8 +95,7 @@ public class MeetingTest extends AbstractTest
         MeetingEntryInlinePage meetingEntryInlinePage = new MeetingEntryInlinePage();
         meetingEntryInlinePage.setTitle("Meeting 01");
         meetingEntryInlinePage.setStartDate(getDateTomorrow());
-        meetingEntryInlinePage.setDurationHour("2");
-        meetingEntryInlinePage.setDurationMinutes("00");
+        meetingEntryInlinePage.setEndDate(getEndDate());
         meetingEntryInlinePage.setPlace("Paris");
         meetingEntryInlinePage.setDescription("First meeting in paris");
         meetingEntryInlinePage.setNotes("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
@@ -134,6 +133,14 @@ public class MeetingTest extends AbstractTest
     {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return dateFormat.format(calendar.getTime());
+    }
+
+    private String getEndDate()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return dateFormat.format(calendar.getTime());
     }

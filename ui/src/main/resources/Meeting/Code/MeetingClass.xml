@@ -102,7 +102,7 @@
     </displayMapError>
     <durationDisplay>
       <customDisplay>{{velocity}}
-#set($durationDiff = $datetool.difference($object.getProperty('startDate').value, $object.getProperty('endDate').value))
+#set($durationDiff = $datetool.difference($object.getValue('startDate'), $object.getValue('endDate')))
 #if($durationDiff)
   #set($fullHours = $durationDiff.hours)
   #set($minutes = $mathtool.sub($durationDiff.minutes, $mathtool.mul($fullHours, 60)))
@@ -155,20 +155,6 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
     </groups>
-    <hasPoll>
-      <customDisplay/>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>select</displayFormType>
-      <displayType/>
-      <name>hasPoll</name>
-      <number>13</number>
-      <prettyName>hasPoll</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </hasPoll>
     <lastEmailSent>
       <customDisplay/>
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>

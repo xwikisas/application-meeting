@@ -43,9 +43,23 @@
 #macro(handleWiki $w $meetingClass)
   #set($dateFormat = "dd/MM/yyyy HH:mm")
   #set($meetingClassDoc = $xwiki.getDocument("${w}:${meetingClass}"))
+  #set ($wikiPrettyName = $services.wiki.getById($w).prettyName)
+  #if ("$!wikiPrettyName.trim()" == '')
+    #set ($wikiPrettyName = $w)
+  #end
   #if ($meetingClassDoc) ##&amp;&amp; !$meetingClassDoc.isNew())
     #set($allMeetings = $services.query.xwql("from doc.object(${meetingClass}) as meeting order by doc.fullName asc").setWiki($w).addFilter('unique').execute())
-    | $w |$allMeetings.size()|(((
+
+    $services.localization.render('meeting.migrations.wiki') $wikiPrettyName
+    $services.localization.render('meeting.migrations.number') $allMeetings.size()
+    (((
+    ## Table header
+    |
+    $services.localization.render('meeting.migrations.document') |
+    $services.localization.render('meeting.migrations.startDate') |
+    $services.localization.render('meeting.migrations.endDate') |
+    $services.localization.render('meeting.migrations.status') |
+    $services.localization.render('meeting.migrations.properties')
     #foreach($md in $allMeetings)
       #set($mDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
       #set($mDoc = $xwiki.getDocument($mDocRef))
@@ -76,7 +90,7 @@
           #set($saved = "Saved")
         #end
       #end
-      | [[$mDoc.prefixedFullName]] |$!datetool.format($dateFormat, $startDate)| $!datetool.format($dateFormat, $existingEndDate) | $!hasBeenEdited | $!totalDuration | $!datetool.format($dateFormat, $endDate) | $!saved##
+      | [[$mDoc.prefixedFullName]] |$!datetool.format($dateFormat, $startDate)| $!datetool.format($dateFormat, $endDate) | $!saved##
       ## Clean the deprecated properties, if there are any
       #set($documentToClean = $xwiki.getXWiki().getDocument($mDocRef, $xcontext.context))
       #set($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
@@ -94,12 +108,12 @@
           ## Set the new author
           #set($discard = $documentToClean.setAuthorReference($xcontext.context.getUserReference()))
           #set($discard = $xwiki.getXWiki().saveDocument($documentToClean, $msg.get("core.model.xobject.synchronizeObjects.versionSummary"),true, $xcontext.context))
-          |cleaned props $cleanedProps
+          |$cleanedProps
         #else
-          |would clean props $cleanedProps
+          |$cleanedProps
         #end
       #else
-        | NO deprecated prop
+        | $services.localization.render('meeting.migrations.deprecatedProps')
       #end
     #end
     )))
