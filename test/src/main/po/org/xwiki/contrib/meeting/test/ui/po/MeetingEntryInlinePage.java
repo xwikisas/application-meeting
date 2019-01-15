@@ -57,16 +57,10 @@ public class MeetingEntryInlinePage extends InlinePage
     private WebElement startDateInput;
 
     /**
-     * The meeting entry duration hour input field.
+     * The meeting entry end date input field.
      */
-    @FindBy(id = "Meeting.Code.MeetingClass_0_durationHour")
-    private WebElement durationHourInput;
-
-    /**
-     * The meeting entry duration minutes input field.
-     */
-    @FindBy(id = "Meeting.Code.MeetingClass_0_durationMinutes")
-    private WebElement durationMinutesInput;
+    @FindBy(id = "Meeting.Code.MeetingClass_0_endDate")
+    private WebElement endDateInput;
 
     /**
      * The meeting entry place input field.
@@ -143,43 +137,22 @@ public class MeetingEntryInlinePage extends InlinePage
     }
 
     /**
-     * @return the value of the duration hour input field
+     * @return the value of the end date input field
      */
-    public String getDurationHour()
+    public String getEndDate()
     {
-        Select durationHourSelect = new Select(durationHourInput);
-        return durationHourSelect.getFirstSelectedOption().getText();
+        return endDateInput.getAttribute(VALUE_ATTRIBUTE_NAME);
     }
 
     /**
-     * Sets the value of the duration hour input field.
+     * Sets the value of the end date input field.
      *
-     * @param duration the new meeting entry duration hour
+     * @param endDate the new meeting entry start date
      */
-    public void setDurationHour(String duration)
+    public void setEndDate(String endDate)
     {
-        Select durationHourSelect = new Select(durationHourInput);
-        durationHourSelect.selectByValue(duration);
-    }
-
-    /**
-     * @return the value of the duration minutes input field
-     */
-    public String getDurationMinutes()
-    {
-        Select durationMinutesSelect = new Select(durationMinutesInput);
-        return durationMinutesSelect.getFirstSelectedOption().getText();
-    }
-
-    /**
-     * Sets the value of the duration minutes input field.
-     *
-     * @param duration the new meeting entry duration minutes
-     */
-    public void setDurationMinutes(String duration)
-    {
-        Select durationMinutesSelect = new Select(durationMinutesInput);
-        durationMinutesSelect.selectByValue(duration);
+        endDateInput.clear();
+        endDateInput.sendKeys(endDate);
     }
 
     /**

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.2" reference="Meeting.Code.Migrations.2\.0" locale="">
+  <web>Meeting.Code.Migrations</web>
+  <name>2.0</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1544623469000</creationDate>
+  <parent>Meeting.Code.Migrations.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1545214225000</date>
+  <contentUpdateDate>1545214225000</contentUpdateDate>
+  <version>1.1</version>
+  <title>2.0</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}
+#macro(handleWiki $w $meetingClass)
+  #set($dateFormat = "dd/MM/yyyy HH:mm")
+  #set($meetingClassDoc = $xwiki.getDocument("${w}:${meetingClass}"))
+  #set ($wikiPrettyName = $services.wiki.getById($w).prettyName)
+  #if ("$!wikiPrettyName.trim()" == '')
+    #set ($wikiPrettyName = $w)
+  #end
+  #if ($meetingClassDoc)
+    #set($allMeetings = $services.query.xwql("from doc.object(${meetingClass}) as meeting order by doc.fullName asc").setWiki($w).addFilter('unique').execute())
+
+    $services.localization.render('meeting.migrations.wiki') $wikiPrettyName
+    $services.localization.render('meeting.migrations.number') $allMeetings.size()
+    (((
+    ## Table header
+    |
+    $services.localization.render('meeting.migrations.document') |
+    $services.localization.render('meeting.migrations.startDate') |
+    $services.localization.render('meeting.migrations.endDate') |
+    $services.localization.render('meeting.migrations.status') |
+    $services.localization.render('meeting.migrations.properties')
+    #foreach($md in $allMeetings)
+      #set($mDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
+      #set($mDoc = $xwiki.getDocument($mDocRef))
+      #set($meetingObj = $mDoc.getObject($meetingClass))
+      #set($startDate = $meetingObj.getProperty('startDate').value)
+      #set($existingEndDate = $meetingObj.getProperty('endDate').value)
+      #set($endDate = $NULL)
+      #set($hasBeenEdited = $NULL)
+      #set($totalDuration = $NULL)
+      #set($saved = $NULL)
+      #if("$!startDate" != '' &amp;&amp; "$!existingEndDate" == '')
+        ## get the total duration of this meeting, add it to the start date
+        ## duration of the meeting depends what information this meeting has set
+        #set($totalDuration = 0)
+        #set($totalDuration = $mathtool.toInteger($meetingObj.getProperty('duration').value))
+        #set($hasBeenEdited = $meetingObj.getProperty('hasBeenEdited').value)
+        #if ($hasBeenEdited == 1)
+          #set($durationHours = $mathtool.toInteger($meetingObj.getProperty('durationHour').value))
+          #set($durationMinutes = $mathtool.toInteger($meetingObj.getProperty('durationMinutes').value))
+          #set($totalDuration = $mathtool.add($mathtool.mul($durationHours, 60), $durationMinutes))
+        #end
+        ## compute the end date based on the start date and the duration
+        #set($endDate = $xwiki.jodatime.getDateTime($startDate.time).plusMinutes($totalDuration).toDate())
+        #set($saved = "Would be saved on actual run")
+        #if ("$!request.confirm" == 'true')
+          #set($discard = $meetingObj.set('endDate', $endDate))
+          #set($discard = $mDoc.save('Set the endDate from the duration fields'))
+          #set($saved = "Saved")
+        #end
+      #end
+      | [[$mDoc.prefixedFullName]] |$!datetool.format($dateFormat, $startDate)| $!datetool.format($dateFormat, $endDate) | $!saved##
+      ## Clean the deprecated properties, if there are any
+      #set($documentToClean = $xwiki.getXWiki().getDocument($mDocRef, $xcontext.context))
+      #set($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
+      #set($needsSave = false)
+      #set($cleanedProps = "")
+      #foreach ($baseProp in $deprecatedBaseObject.getXClass($xcontext.context).getDeprecatedObjectProperties($deprecatedBaseObject))
+        #if ("$!request.confirm" == 'true')
+          #set($discard = $deprecatedBaseObject.removeField($baseProp.name))
+        #end
+        #set($cleanedProps = "${baseProp.name}, $cleanedProps")
+        #set($needsSave = true)
+      #end
+      #if ($needsSave)
+        #if ("$!request.confirm" == 'true')
+          ## Set the new author
+          #set($discard = $documentToClean.setAuthorReference($xcontext.context.getUserReference()))
+          #set($discard = $xwiki.getXWiki().saveDocument($documentToClean, $msg.get("core.model.xobject.synchronizeObjects.versionSummary"),true, $xcontext.context))
+          |$cleanedProps
+        #else
+          |$cleanedProps
+        #end
+      #else
+        | $services.localization.render('meeting.migrations.deprecatedProps')
+      #end
+    #end
+    )))
+  #end
+#end
+{{/velocity}}
+
+{{velocity}}
+#if ("$!request.confirm" != 'true')
+  {{html}}
+    &lt;a href="$doc.getURL('view', 'confirm=true')" class='button'&gt;
+      $services.localization.render('meeting.migrations.button')
+    &lt;/a&gt;
+  {{/html}}
+#end
+
+#set($meetingClass = "Meeting.Code.MeetingClass")
+#set($wiki = "$!request.wiki")
+#if ($wiki != '')
+  #handleWiki($wiki, $meetingClass)
+#else
+  #foreach($w in $services.wiki.getAllIds())
+    #handleWiki($w, $meetingClass)
+  #end
+#end
+{{/velocity}}</content>
+</xwikidoc>
