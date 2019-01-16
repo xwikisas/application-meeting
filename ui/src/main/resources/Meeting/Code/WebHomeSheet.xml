@@ -53,7 +53,7 @@ $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&
   'leader': {"type":"text","size":10,"html":true},
   'place': {"type":"text","size":10},
   'startDate': {"type":"text","size":10},
-  'durationString': {"type":"text","filterable":true,"sortable":false,"html":true},
+  'durationDisplay': {"type":"text","filterable":true,"sortable":false,"html":true},
   'status': {"type":"list","size":10},
   '_actions': {"sortable":false,"filterable":false,"html":true,"actions":["delete", "edit"]}
 })
@@ -66,7 +66,7 @@ $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&
   'selectedColumn': 'startDate',
   'defaultOrder': 'desc'
 })
-#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'durationString', 'status', '_actions'])
+#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'durationDisplay', 'status', '_actions'])
 #livetable('meeting' $columns $columnsProperties $options)
 {{/velocity}}</content>
 </xwikidoc>
