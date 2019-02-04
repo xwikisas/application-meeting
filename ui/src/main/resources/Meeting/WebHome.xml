@@ -49,6 +49,34 @@
   <object>
     <name>Meeting.WebHome</name>
     <number>0</number>
+    <className>XWiki.DefaultPageTemplateClass</className>
+    <guid>aafba1b3-8fd6-415e-b23b-c8d4fa418166</guid>
+    <class>
+      <name>XWiki.DefaultPageTemplateClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultPageTemplate>
+        <disabled>0</disabled>
+        <name>defaultPageTemplate</name>
+        <number>1</number>
+        <prettyName>defaultPageTemplate</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultPageTemplate>
+    </class>
+    <property>
+      <defaultPageTemplate>Meeting.Code.MeetingTemplateProvider</defaultPageTemplate>
+    </property>
+  </object>
+  <object>
+    <name>Meeting.WebHome</name>
+    <number>0</number>
     <className>XWiki.DocumentSheetBinding</className>
     <guid>012f5714-5d63-442a-86ab-c81109414750</guid>
     <class>
