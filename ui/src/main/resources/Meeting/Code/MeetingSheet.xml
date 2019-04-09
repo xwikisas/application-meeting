@@ -113,14 +113,18 @@
     )))
     (% class="col-xs-12 col-sm-4" %)
     (((
+    #if("$!doc.getValue('status')" != '')
       ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_endDate"#end&gt;
           $!services.icon.render('calendar') $services.localization.render('meeting.endDate.label')
         &lt;/label&gt;
       : $doc.display('endDate')
-      ; &lt;label #if ($xcontext.action == 'edit')for="Meeting.Code.MeetingClass_0_durationDisplay" #end&gt;
-          $!services.icon.render('clock') $services.localization.render('meeting.durationDisplay.label')
-        &lt;/label&gt;
-      : $doc.display('durationDisplay')
+      #if ($xcontext.action == 'view')
+        ; &lt;label&gt;
+            $!services.icon.render('clock') $services.localization.render('meeting.durationDisplay.label')
+          &lt;/label&gt;
+        : $doc.display('durationDisplay')
+      #end
+    #end
     )))
     (% class="col-xs-12 col-sm-4" %)
     (((
