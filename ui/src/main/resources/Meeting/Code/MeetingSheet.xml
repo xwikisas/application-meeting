@@ -34,7 +34,7 @@
   <date>1511513778000</date>
   <contentUpdateDate>1511513778000</contentUpdateDate>
   <version>1.1</version>
-  <title/>
+  <title>#if("$!doc.getObject('Meeting.Code.MeetingClass').getValue('meetingTitle')" != '')$!doc.getObject('Meeting.Code.MeetingClass').getValue('meetingTitle') #elseif($doc.name=='MeetingSheet')Meeting Sheet #else${doc.title} #end</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -91,16 +91,15 @@
     (% class="col-md-12 col-sm-12 col-xs-12" %)
     (((
     #if ($xcontext.action == 'edit')
-      ## Add a title of event in edit modetime
-      #set ($title = $request.title)
-      #if ("$!title" == '')
-        #set ($title = $doc.getValue('meetingTitle'))
-      #end
+      ## Add a title of event in edit mode.
       #set ($meetingTitleId = 'Meeting.Code.MeetingClass_0_meetingTitle')
       ; &lt;label for="$meetingTitleId"&gt;
           $!services.icon.render('font') $services.localization.render('contrib.meeting.field.meetingTitle')
         &lt;/label&gt;
-      : &lt;input id="$meetingTitleId" name="$meetingTitleId" size="30" type="text" value="$escapetool.xml($title)"&gt;
+      #if ("$!obj.getValue('meetingTitle')" == '')
+        #set ($discard = $obj.set('meetingTitle', $doc.title))
+      #end
+      : $doc.display('meetingTitle')
     #end
     )))
   )))
