@@ -72,7 +72,7 @@
     <dependency>
       <groupId>com.xwiki.xpoll</groupId>
       <artifactId>application-xpoll-ui</artifactId>
-      <version>1.10.3</version>
+      <version>1.10.6</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
