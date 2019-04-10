@@ -41,8 +41,8 @@
     <url>https://github.com/xwikisas/application-meeting/issues</url>
   </issueManagement>
   <scm>
-    <connection>scm:git:https://github.com/xwikisas/application-meeting.git</connection>
-    <developerConnection>scm:git:https://github.com/xwikisas/application-meeting.git</developerConnection>
+    <connection>scm:git:git://github.com/xwikisas/application-meeting.git</connection>
+    <developerConnection>scm:git:git@github.com:xwikisas/application-meeting.git</developerConnection>
     <url>https://github.com/xwikisas/application-meeting</url>
     <tag>HEAD</tag>
   </scm>
