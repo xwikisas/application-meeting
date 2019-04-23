@@ -57,6 +57,8 @@ meeting.migrations.number=Number of documents to be modified:
 meeting.migrations.properties=Properties to be updated after executing
 meeting.migrations.startDate=Start Date
 meeting.migrations.status=Status
+meeting.migrations.titleProp=Title property value
+meeting.migrations.hasDeprecatedProp=Needs migration
 meeting.migrations.wiki=Wiki:
 
 meeting.livetable.doc.title=Meeting
