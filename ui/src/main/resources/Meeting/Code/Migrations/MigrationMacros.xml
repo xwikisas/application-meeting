@@ -47,16 +47,16 @@
   #set($migration191 = false)
   #set($migration195 = false)
   #foreach($meet in $meetings)
-    #set($meetDoc = $xwiki.getDocument($meet))
-    #set($meetObj = $meetDoc.getObject('Meeting.Code.MeetingClass'))
-    #set($durationString = $meetObj.getValue('durationString'))
-    #set($meetingTitle = $meetObj.getValue('meetingTitle'))
+    #set($meetingDoc = $xwiki.getDocument($meet))
+    #set($meetingObj = $meetingDoc.getObject('Meeting.Code.MeetingClass'))
+    #set($durationString = $meetingObj.getValue('durationString'))
+    #set($meetingTitle = $meetingObj.getValue('meetingTitle'))
     ## Check which migration should be executed.
-    #if ($durationString)
+    #if ("$!durationString" != '')
       #set($migrationNeeded = true)
       #set($migration191 = true)
     #end
-    #if ($!meetingTitle)
+    #if ("$!meetingTitle" != '')
       #set($migrationNeeded = true)
       #set($migration195 = true)
     #end
@@ -78,7 +78,7 @@
     {{/error}}
   #end
 #end
-#if($xwiki.rightsmanager.getAllGroupsNamesForMember($xcontext.user).contains('XWiki.XWikiAdminGroup'))
+#if($hasAdmin)
   #testMigrationNeeded()
 #end
 {{/velocity}}</content>

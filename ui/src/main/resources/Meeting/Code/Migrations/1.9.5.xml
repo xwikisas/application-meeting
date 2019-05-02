@@ -56,37 +56,37 @@
     $services.localization.render('meeting.migrations.titleProp')|=
     $services.localization.render('meeting.migrations.hasDeprecatedProp')
     #foreach($md in $allMeetings)
-      #set($mDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
-      #set($mDoc = $xwiki.getDocument($mDocRef))
-      #set($meetingObj = $mDoc.getObject($meetingClass))
+      #set($meetingDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
+      #set($meetingDoc = $xwiki.getDocument($meetingDocRef))
+      #set($meetingObj = $meetingDoc.getObject($meetingClass))
       #set($meetingTitle = $meetingObj.getValue('meetingTitle'))
       #set($needsMigration = false)
-      #if($!meetingTitle)
+      #if("$!meetingTitle" != '')
         #set($needsMigration = true)
       #end
-      | [[$mDoc.prefixedFullName]] |
+      | [[$meetingDoc.prefixedFullName]] |
       $!meetingTitle |
       $needsMigration
       #if ("$!request.confirm" == 'true')
         ## Update the title if it wasn't changed.
-        #if("$!meetingTitle" != '' &amp;&amp; $!meetingTitle != $mDoc.title)
-          #set ($discard = $mDoc.setTitle($!meetingTitle))
-          #set($discard = $mDoc.save("Updated title"))
+        #if("$!meetingTitle" != '' &amp;&amp; $meetingTitle != $meetingDoc.title)
+          #set ($discard = $meetingDoc.setTitle($meetingTitle))
+          #set($discard = $meetingDoc.save("Updated title"))
         #end
         ## Clean deprecated meetingTitle property.
-        #set($documentToClean = $xwiki.getXWiki().getDocument($mDocRef, $xcontext.context))
-        #set($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
+        #set($meetingXWikiDoc = $xwiki.getXWiki().getDocument($meetingDocRef, $xcontext.context))
+        #set($obj = $meetingXWikiDoc.getObject($meetingClass))
         #set($needsSave = false)
         #set($toBeDeleted = ['meetingTitle'])
-        #foreach ($baseProp in $deprecatedBaseObject.getXClass($xcontext.context).getDeprecatedObjectProperties($deprecatedBaseObject))
+        #foreach ($baseProp in $obj.getXClass($xcontext.context).getDeprecatedObjectProperties($obj))
           #if($toBeDeleted.contains($baseProp.name))
-            #set($discard = $deprecatedBaseObject.removeField($baseProp.name))
+            #set($discard = $obj.removeField($baseProp.name))
             #set($needsSave = true)
           #end
         #end
         #if ($needsSave)
-          #set($discard = $documentToClean.setAuthorReference($xcontext.context.getUserReference()))
-          #set($discard = $xwiki.getXWiki().saveDocument($documentToClean, 'Migration complete', true, $xcontext.context))
+          #set($discard = $meetingXWikiDoc.setAuthorReference($xcontext.context.getUserReference()))
+          #set($discard = $xwiki.getXWiki().saveDocument($meetingXWikiDoc, 'Migration complete', true, $xcontext.context))
         #end
       #end
     #end

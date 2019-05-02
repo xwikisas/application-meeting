@@ -39,8 +39,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Meeting.Code.Macros"/}}
-{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
+  <content>{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
 
 {{velocity}}
 #set($docextras = [])
