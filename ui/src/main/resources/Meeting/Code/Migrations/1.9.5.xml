@@ -69,7 +69,7 @@
       $needsMigration
       #if ("$!request.confirm" == 'true')
         ## Update the title if it wasn't changed.
-        #if($!meetingTitle != '' &amp;&amp; $!meetingTitle != $mDoc.title)
+        #if("$!meetingTitle" != '' &amp;&amp; $!meetingTitle != $mDoc.title)
           #set ($discard = $mDoc.setTitle($!meetingTitle))
           #set($discard = $mDoc.save("Updated title"))
         #end
@@ -77,13 +77,16 @@
         #set($documentToClean = $xwiki.getXWiki().getDocument($mDocRef, $xcontext.context))
         #set($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
         #set($needsSave = false)
+        #set($toBeDeleted = ['meetingTitle'])
         #foreach ($baseProp in $deprecatedBaseObject.getXClass($xcontext.context).getDeprecatedObjectProperties($deprecatedBaseObject))
-          #set($discard = $deprecatedBaseObject.removeField($baseProp.name))
-          #set($needsSave = true)
+          #if($toBeDeleted.contains($baseProp.name))
+            #set($discard = $deprecatedBaseObject.removeField($baseProp.name))
+            #set($needsSave = true)
+          #end
         #end
         #if ($needsSave)
           #set($discard = $documentToClean.setAuthorReference($xcontext.context.getUserReference()))
-          #set($discard = $xwiki.getXWiki().saveDocument($documentToClean, $msg.get("core.model.xobject.synchronizeObjects.versionSummary"),true, $xcontext.context))
+          #set($discard = $xwiki.getXWiki().saveDocument($documentToClean, 'Migration complete', true, $xcontext.context))
         #end
       #end
     #end

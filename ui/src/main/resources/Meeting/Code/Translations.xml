@@ -47,18 +47,19 @@ contrib.meeting.calendarView=Calendar View
 contrib.meeting.calendarView.title=Calendar View
 contrib.meeting.calendarView.noMacro.admin=To display the calendar view of the meetings, you need to install the Full Calendar Macro on this wiki :
 contrib.meeting.calendarView.noMacro.noAdmin=We are missing the macro displaying the calendar view. Ask this wiki administrator to install the "FullCalendar" Macro.
-meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link to complete the migration:
+meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link/s to complete the migration:
 
 meeting.migrations.button=Execute the modification
 meeting.migrations.deprecatedProps=No deprecated properties
 meeting.migrations.document=Document
 meeting.migrations.endDate=End Date
+meeting.migrations.hasDeprecatedProp=Needs migration
 meeting.migrations.number=Number of documents to be modified:
+meeting.migrations.programming=You need programming rights for executing the migration. More informations [[here&gt;&gt;{0}]]:
 meeting.migrations.properties=Properties to be updated after executing
 meeting.migrations.startDate=Start Date
 meeting.migrations.status=Status
 meeting.migrations.titleProp=Title property value
-meeting.migrations.hasDeprecatedProp=Needs migration
 meeting.migrations.wiki=Wiki:
 
 meeting.livetable.doc.title=Meeting
