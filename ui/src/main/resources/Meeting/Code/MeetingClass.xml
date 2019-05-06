@@ -191,19 +191,6 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
     </leader>
-    <meetingTitle>
-      <customDisplay/>
-      <disabled>0</disabled>
-      <name>meetingTitle</name>
-      <number>1</number>
-      <picker>0</picker>
-      <prettyName>Title</prettyName>
-      <size>30</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-    </meetingTitle>
     <notes>
       <customDisplay/>
       <disabled>0</disabled>

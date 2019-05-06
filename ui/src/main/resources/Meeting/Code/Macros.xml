@@ -156,25 +156,5 @@
     END:VCALENDAR
   ")
 #end
-
-#macro (testMigrationNeeded)
-  #set($query = "from doc.object(Meeting.Code.MeetingClass) as meeting")
-  #set($meetings = $services.query.xwql($query).execute())
-  #set($migrationNeeded = false)
-  #foreach($meet in $meetings)
-    #set($meetDoc = $xwiki.getDocument($meet))
-    #set($meetObj = $meetDoc.getObject('Meeting.Code.MeetingClass'))
-    #set($durationString = $meetObj.getProperty('durationString').value)
-    #if ($durationString)
-      #set($migrationNeeded = true)
-      #break
-    #end
-  #end
-  #if($migrationNeeded)
-    {{error}}
-      $services.localization.render('meeting.home.migrations') [[Meeting.Code.Migrations.2\.0]]
-    {{/error}}
-  #end
-#end
 {{/velocity}}</content>
 </xwikidoc>
