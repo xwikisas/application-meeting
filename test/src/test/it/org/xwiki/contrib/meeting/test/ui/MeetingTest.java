@@ -93,7 +93,6 @@ public class MeetingTest extends AbstractTest
         createPage.clickCreate();
 
         MeetingEntryInlinePage meetingEntryInlinePage = new MeetingEntryInlinePage();
-        meetingEntryInlinePage.setTitle("Meeting 01");
         meetingEntryInlinePage.setStartDate(getDateTomorrow());
         meetingEntryInlinePage.setEndDate(getEndDate());
         meetingEntryInlinePage.setPlace("Paris");

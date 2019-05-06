@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.2" reference="Meeting.Code.Migrations.1\.9\.5" locale="">
+  <web>Meeting.Code.Migrations</web>
+  <name>1.9.5</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1556029586000</creationDate>
+  <parent>Meeting.Code.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1556029598000</date>
+  <contentUpdateDate>1556029598000</contentUpdateDate>
+  <version>1.1</version>
+  <title>1.9.5</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}
+#macro(handleWiki $w $meetingClass)
+  #set($meetingClassDoc = $xwiki.getDocument("${w}:${meetingClass}"))
+  #set ($wikiPrettyName = $services.wiki.getById($w).prettyName)
+  #if ("$!wikiPrettyName.trim()" == '')
+    #set ($wikiPrettyName = $w)
+  #end
+  #if ($meetingClassDoc)
+    #set($allMeetings = $services.query.xwql("from doc.object(${meetingClass}) as meeting order by doc.fullName asc").setWiki($w).addFilter('unique').execute())
+    $services.localization.render('meeting.migrations.wiki') $wikiPrettyName
+
+    (((
+    |=
+    $services.localization.render('meeting.migrations.document')|=
+    $services.localization.render('meeting.migrations.titleProp')|=
+    $services.localization.render('meeting.migrations.hasDeprecatedProp')
+    #foreach($md in $allMeetings)
+      #set($meetingDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
+      #set($meetingDoc = $xwiki.getDocument($meetingDocRef))
+      #set($meetingObj = $meetingDoc.getObject($meetingClass))
+      #set($meetingTitle = $meetingObj.getValue('meetingTitle'))
+      #set($needsMigration = false)
+      #if("$!meetingTitle" != '')
+        #set($needsMigration = true)
+      #end
+      | [[$meetingDoc.prefixedFullName]] |
+      $!meetingTitle |
+      $needsMigration
+      #if ("$!request.confirm" == 'true')
+        ## Update the title if it wasn't changed.
+        #if("$!meetingTitle" != '' &amp;&amp; $meetingTitle != $meetingDoc.title)
+          #set ($discard = $meetingDoc.setTitle($meetingTitle))
+          #set($discard = $meetingDoc.save("Updated title"))
+        #end
+        ## Clean deprecated meetingTitle property.
+        #set($meetingXWikiDoc = $xwiki.getXWiki().getDocument($meetingDocRef, $xcontext.context))
+        #set($obj = $meetingXWikiDoc.getObject($meetingClass))
+        #set($needsSave = false)
+        #set($toBeDeleted = ['meetingTitle'])
+        #foreach ($baseProp in $obj.getXClass($xcontext.context).getDeprecatedObjectProperties($obj))
+          #if($toBeDeleted.contains($baseProp.name))
+            #set($discard = $obj.removeField($baseProp.name))
+            #set($needsSave = true)
+          #end
+        #end
+        #if ($needsSave)
+          #set($discard = $meetingXWikiDoc.setAuthorReference($xcontext.context.getUserReference()))
+          #set($discard = $xwiki.getXWiki().saveDocument($meetingXWikiDoc, 'Migration complete', true, $xcontext.context))
+        #end
+      #end
+    #end
+    )))
+
+  #end
+#end
+{{/velocity}}
+
+{{velocity}}
+#if ("$!request.confirm" != 'true')
+  {{html}}
+    &lt;a href="$doc.getURL('view', 'confirm=true')" class='button'&gt;
+      $services.localization.render('meeting.migrations.button')
+    &lt;/a&gt;
+  {{/html}}
+#end
+
+#set($meetingClass = "Meeting.Code.MeetingClass")
+#set($wiki = "$!request.wiki")
+#if ($wiki != '')
+  #handleWiki($wiki, $meetingClass)
+#else
+  #foreach($w in $services.wiki.getAllIds())
+    #handleWiki($w, $meetingClass)
+  #end
+#end
+{{/velocity}}</content>
+</xwikidoc>

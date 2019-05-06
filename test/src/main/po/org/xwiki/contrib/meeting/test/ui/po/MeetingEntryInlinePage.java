@@ -45,12 +45,6 @@ public class MeetingEntryInlinePage extends InlinePage
     public static final String SUGGEST_ITEM_CLASS_NAME = "suggestItem";
 
     /**
-     * The meeting entry title input field.
-     */
-    @FindBy(id = "Meeting.Code.MeetingClass_0_meetingTitle")
-    private WebElement titleInput;
-
-    /**
      * The meeting entry start date input field.
      */
     @FindBy(id = "Meeting.Code.MeetingClass_0_startDate")
@@ -97,25 +91,6 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     @FindBy(id = "Meeting.Code.MeetingClass_0_participants")
     private WebElement participantsInput;
-
-    /**
-     * @return the value of the title input field
-     */
-    public String getTitle()
-    {
-        return titleInput.getAttribute(VALUE_ATTRIBUTE_NAME);
-    }
-
-    /**
-     * Sets the value of the title input field.
-     *
-     * @param title the new meeting entry title
-     */
-    public void setTitle(String title)
-    {
-        titleInput.clear();
-        titleInput.sendKeys(title);
-    }
 
     /**
      * @return the value of the start date input field
