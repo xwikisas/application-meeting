@@ -95,13 +95,14 @@
       #set($documentToClean = $xwiki.getXWiki().getDocument($mDocRef, $xcontext.context))
       #set($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
       #set($needsSave = false)
+      #set($toBeDeleted = ['duration', 'durationHour', 'durationMinutes', 'durationString', 'hasBeenEdited', 'hasPoll'])
       #set($cleanedProps = "")
       #foreach ($baseProp in $deprecatedBaseObject.getXClass($xcontext.context).getDeprecatedObjectProperties($deprecatedBaseObject))
-        #if ("$!request.confirm" == 'true')
+        #if ("$!request.confirm" == 'true' &amp;&amp; $toBeDeleted.contains($baseProp.name))
           #set($discard = $deprecatedBaseObject.removeField($baseProp.name))
+          #set($cleanedProps = "${baseProp.name}, $cleanedProps")
+          #set($needsSave = true)
         #end
-        #set($cleanedProps = "${baseProp.name}, $cleanedProps")
-        #set($needsSave = true)
       #end
       #if ($needsSave)
         #if ("$!request.confirm" == 'true')
