@@ -39,64 +39,96 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>## XWiki Translation for language fr generated from http://www.l10n.xwiki.org
-Meeting.Code.MeetingClass_meetingTitle=Titre
+  <content>Meeting.Code.MeetingClass_meetingTitle=Titre
 Meeting.Code.MeetingClass_status_value1=En cours de préparation
 Meeting.Code.MeetingClass_status_value2=Actif
 Meeting.Code.MeetingClass_status_value3=Annulé
 Meeting.Code.MeetingClass_status_value4=Fini
+
 contrib.hr.notification.additionalPart=Son message :
 contrib.meeting.app.title=Réunions
 contrib.meeting.calendarView=Vue calendaire
 contrib.meeting.calendarView.noMacro.admin=Pour pouvoir avoir une vue calendaire des réunions, il faut installer la Macro FullCalendar sur ce Wiki :
 contrib.meeting.calendarView.noMacro.noAdmin=Il manque la macro nécessaire à l'affichage calendaire. Demandez à l'administrateur de votre wiki d'installer la Macro "FullCalendar".
 contrib.meeting.calendarView.title=Vue calendaire
-contrib.meeting.createPoll=Créer un sondage pour cette réunion
+
 contrib.meeting.field.description=Ordre du jour
 contrib.meeting.field.displayMap=Afficher la carte
 contrib.meeting.field.duration=Durée de l'évènement
+contrib.meeting.field.groups=Groupes participants
 contrib.meeting.field.lastEmailSent=Dernier mail envoyé sur le
 contrib.meeting.field.leader=Responsable
 contrib.meeting.field.meetingTitle=Titre
+contrib.meeting.field.message=Message
 contrib.meeting.field.notes=Compte rendu
 contrib.meeting.field.participants=Participants
-contrib.meeting.field.groups=Groupes participants
 contrib.meeting.field.place=Lieu
 contrib.meeting.field.startDate=Date de début
 contrib.meeting.field.status=Statut
-contrib.meeting.field.message=Message
+
 contrib.meeting.home.presentation=Utilisez cette application pour organiser des réunions, envoyer des invitations et avoir une vue {0}calendaire{1} de toutes les réunions.
 contrib.meeting.home.title=Réunions
+
+# Map Macro
 contrib.meeting.map.error.deactivation=La carte n'a pas été affichée :
 contrib.meeting.map.error.invalidRequest=demande invalide !
 contrib.meeting.map.error.overQueryLimit=quota dépassé !
 contrib.meeting.map.error.requestDenied=demande refusée !
 contrib.meeting.map.error.unknownError=erreur inconnue !
 contrib.meeting.map.error.zeroResults=Aucun résultat trouvé !
+
 contrib.meeting.notification.additionalMessage=Tapez ici le message que vous voulez envoyer à ces utilisateurs (optionnel) :
 contrib.meeting.notification.body={0} vous invite a participer à la réunion {1}.
 contrib.meeting.notification.failure=Une erreur est survenue lors de l'envoi des courriels de notification.
 contrib.meeting.notification.link=Voir la page de la réunion sur XWiki.
+contrib.meeting.notification.requestError=Une erreur s'est produite lors de l'envoi de votre demande. Veuillez réessayer.
+contrib.meeting.notification.sending=Envoi d'une notification...
 contrib.meeting.notification.submit=Envoyer une invitation
 contrib.meeting.notification.success=Un courrier de notification a bien été envoyé aux participants.
 contrib.meeting.notification.title=Vous êtes invités à participer à une réunion : {0}
 contrib.meeting.notification.view.event=Voir l'événement sur
+
+# XPoll Application
+contrib.meeting.createPoll=Créer un sondage pour cette réunion
+contrib.meeting.poll.explanation=Un sondage a été créé pour définir les modalités de cette réunion. Cliquez sur le lien ci-dessous pour y accéder.
+contrib.meeting.poll.go=Aller au sondage
+
+# Next Meetings panel
 contrib.meeting.panel.addmeeting=Ajouter une réunion
 contrib.meeting.panel.noMeetings=Il n'y a aucune réunion à venir.
 contrib.meeting.panel.title=Prochaines réunions
 contrib.meeting.panel.viewallmeetings=Voir toutes les réunions
-contrib.meeting.poll.explanation=Un sondage a été créé pour définir les modalités de cette réunion. Cliquez sur le lien ci-dessous pour y accéder.
-contrib.meeting.poll.go=Aller au sondage
+
+meeting.endDate.label=Date de fin
 meeting.extension.name=Application Réunion (Pro)
+meeting.durationDisplay.label=Durée de la réunion
+meeting.home.migrations=Certaines propriétés ont été modifiées depuis votre dernière mise à jour. Veuillez suivre le(s) lien(s) suivant(s) pour terminer la migration :
+
 meeting.livetable._actions=Actions
 meeting.livetable.doc.name=Titre
 meeting.livetable.doc.title=Réunion
+meeting.livetable.durationDisplay=Durée
 meeting.livetable.durationString=Durée
 meeting.livetable.emptyvalue=-
 meeting.livetable.leader=Responsable
 meeting.livetable.place=Lieu
 meeting.livetable.startDate=Horaire
 meeting.livetable.status=Statut
+
+meeting.migrations.button=Exécuter la modification
+meeting.migrations.deprecatedProps=Pas de propriétés obsolètes
+meeting.migrations.document=Document
+meeting.migrations.endDate=Date de fin
+meeting.migrations.hasDeprecatedProp=Besoin de migration
+meeting.migrations.number=Nombre de documents à modifier :
+meeting.migrations.programming=Vous avez besoin de droits de programmation pour exécuter la migration. Plus d'informations [[ici &gt;&gt; {0}]]:
+meeting.migrations.properties=Propriétés à mettre à jour après l'exécution
+meeting.migrations.startDate=Horaire
+meeting.migrations.status=Statut
+meeting.migrations.titleProp=Titre de la valeur de la propriété
+meeting.migrations.wiki=Wiki:
+
+# Next Meetings macro
 rendering.macro.nextmeetings.description=Afficher une liste des réunions à venir, triée par la date de début des réunions.
 rendering.macro.nextmeetings.name=Prochaines réunions
 rendering.macro.nextmeetings.parameter.homelink.description=Afficher un lien vers la page d'accueil de l'application "Réunions". Les valeurs possibles sont "show" (afficher) et "hide" (cacher).
@@ -107,8 +139,7 @@ rendering.macro.nextmeetings.parameter.limit.name=Nombre de réunions affichées
 rendering.macro.nextmeetings.parameter.status.description=Afficher le statut de la réunion. Les valeurs possibles sont "show" (afficher) et "hide" (cacher).
 rendering.macro.nextmeetings.parameter.status.name=Statut
 
-
 # Template Provider
-templateProvider.meeting.name=Réunion
-templateProvider.meeting.description=Organiser un événement</content>
+templateProvider.meeting.description=Organiser un événement
+templateProvider.meeting.name=Réunion</content>
 </xwikidoc>
