@@ -60,8 +60,8 @@ contrib.meeting.field.place=Place
 contrib.meeting.field.startDate=Start Date
 contrib.meeting.field.status=Status
 
-contrib.meeting.home.title=Meetings
 contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
+contrib.meeting.home.title=Meetings
 
 # Map Macro
 contrib.meeting.map.error.deactivation=Map could not be displayed:
@@ -99,8 +99,8 @@ meeting.durationDisplay.label=Meeting Duration
 meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link/s to complete the migration:
 
 meeting.livetable._actions=Actions
-meeting.livetable.doc.title=Meeting
 meeting.livetable.doc.name=Title
+meeting.livetable.doc.title=Meeting
 meeting.livetable.durationDisplay=Duration
 meeting.livetable.durationString=Duration
 meeting.livetable.emptyvalue=-
