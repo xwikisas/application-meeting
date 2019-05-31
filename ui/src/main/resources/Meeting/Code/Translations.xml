@@ -39,15 +39,75 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
-
+  <content>contrib.hr.notification.additionalPart=His/her message:
 contrib.meeting.app.title=Meetings
-contrib.meeting.home.title=Meetings
 contrib.meeting.calendarView=Calendar View
-contrib.meeting.calendarView.title=Calendar View
 contrib.meeting.calendarView.noMacro.admin=To display the calendar view of the meetings, you need to install the Full Calendar Macro on this wiki :
 contrib.meeting.calendarView.noMacro.noAdmin=We are missing the macro displaying the calendar view. Ask this wiki administrator to install the "FullCalendar" Macro.
+contrib.meeting.calendarView.title=Calendar View
+
+contrib.meeting.field.description=Description
+contrib.meeting.field.displayMap=Display map
+contrib.meeting.field.duration=Duration
+contrib.meeting.field.groups=Participating groups
+contrib.meeting.field.lastEmailSent=Last mail sent on the
+contrib.meeting.field.leader=Leader
+contrib.meeting.field.meetingTitle=Title
+contrib.meeting.field.message=Message
+contrib.meeting.field.notes=Meeting notes
+contrib.meeting.field.participants=Participating members
+contrib.meeting.field.place=Place
+contrib.meeting.field.startDate=Start Date
+contrib.meeting.field.status=Status
+
+contrib.meeting.home.title=Meetings
+contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
+
+# Map Macro
+contrib.meeting.map.error.deactivation=Map could not be displayed:
+contrib.meeting.map.error.invalidRequest=invalid request!
+contrib.meeting.map.error.overQueryLimit=exceeded quota!
+contrib.meeting.map.error.requestDenied=request denied!
+contrib.meeting.map.error.unknownError=unknown error!
+contrib.meeting.map.error.zeroResults=no results found!
+
+contrib.meeting.notification.additionalMessage=Type here the message you want to send to the participants (optional) :
+contrib.meeting.notification.body={0} invited you to participate in the meeting {1}.
+contrib.meeting.notification.failure=An error occured while sending the notification emails.
+contrib.meeting.notification.link=See the meeting page on XWiki.
+contrib.meeting.notification.requestError=There was an error sending your request. Please try again.
+contrib.meeting.notification.sending=Sending notification...
+contrib.meeting.notification.submit=Send invitation
+contrib.meeting.notification.success=A notification email has successfully been sent to the participants.
+contrib.meeting.notification.title=You are invited to participate in a meeting: {0}
+contrib.meeting.notification.view.event=View your event at
+
+# XPoll Application
+contrib.meeting.createPoll=Create a poll for this meeting
+contrib.meeting.poll.explanation=A poll has been created in order to define the meeting details. Click on the link below to access it.
+contrib.meeting.poll.go=Go to the poll
+
+# Next Meetings panel
+contrib.meeting.panel.addmeeting=Add meeting
+contrib.meeting.panel.noMeetings=There are no upcoming meetings.
+contrib.meeting.panel.title=Next Meetings
+contrib.meeting.panel.viewallmeetings=View all meetings
+
+meeting.endDate.label=End Date
+meeting.extension.name=Meeting Application (Pro)
+meeting.durationDisplay.label=Meeting Duration
 meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link/s to complete the migration:
+
+meeting.livetable._actions=Actions
+meeting.livetable.doc.title=Meeting
+meeting.livetable.doc.name=Title
+meeting.livetable.durationDisplay=Duration
+meeting.livetable.durationString=Duration
+meeting.livetable.emptyvalue=-
+meeting.livetable.leader=Leader
+meeting.livetable.place=Place
+meeting.livetable.startDate=Start
+meeting.livetable.status=Status
 
 meeting.migrations.button=Execute the modification
 meeting.migrations.deprecatedProps=No deprecated properties
@@ -62,79 +122,19 @@ meeting.migrations.status=Status
 meeting.migrations.titleProp=Title property value
 meeting.migrations.wiki=Wiki:
 
-meeting.livetable.doc.title=Meeting
-meeting.livetable.doc.name=Title
-meeting.livetable.leader=Leader
-meeting.livetable.place=Place
-meeting.livetable.durationString=Duration
-meeting.livetable.durationDisplay=Duration
-meeting.livetable.startDate=Start
-meeting.livetable.status=Status
-meeting.livetable.emptyvalue=-
-meeting.livetable._actions=Actions
-
-meeting.extension.name=Meeting Application (Pro)
-
-contrib.meeting.field.meetingTitle=Title
-contrib.meeting.field.leader=Leader
-contrib.meeting.field.place=Place
-contrib.meeting.field.displayMap=Display map
-contrib.meeting.field.duration=Duration
-contrib.meeting.field.startDate=Start Date
-contrib.meeting.field.description=Description
-contrib.meeting.field.participants=Participating members
-contrib.meeting.field.groups=Participating groups
-contrib.meeting.field.notes=Meeting notes
-contrib.meeting.field.status=Status
-contrib.meeting.field.lastEmailSent=Last mail sent on the
-contrib.meeting.field.message=Message
-meeting.endDate.label=End Date
-meeting.durationDisplay.label=Meeting Duration
-
-contrib.meeting.notification.success=A notification email has successfully been sent to the participants.
-contrib.meeting.notification.failure=An error occured while sending the notification emails.
-contrib.meeting.notification.sending=Sending notification...
-contrib.meeting.notification.requestError=There was an error sending your request. Please try again.
-contrib.meeting.notification.title=You are invited to participate in a meeting: {0}
-contrib.meeting.notification.body={0} invited you to participate in the meeting {1}.
-contrib.meeting.notification.link=See the meeting page on XWiki.
-contrib.meeting.notification.view.event = View your event at
-contrib.meeting.notification.submit=Send invitation
-contrib.meeting.notification.additionalMessage=Type here the message you want to send to the participants (optional) :
-contrib.hr.notification.additionalPart=His/her message:
-
-# Next Meetings panel
-contrib.meeting.panel.title=Next Meetings
-contrib.meeting.panel.noMeetings=There are no upcoming meetings.
-contrib.meeting.panel.addmeeting=Add meeting
-contrib.meeting.panel.viewallmeetings=View all meetings
-
 # Next Meetings macro
-rendering.macro.nextmeetings.name=Next Meetings
 rendering.macro.nextmeetings.description=Displays a defined number of upcoming meetings
-rendering.macro.nextmeetings.parameter.limit.name=Limit
+rendering.macro.nextmeetings.name=Next Meetings
 rendering.macro.nextmeetings.parameter.limit.description=Number of maximum entries.
-rendering.macro.nextmeetings.parameter.homelink.name=Home Link
+rendering.macro.nextmeetings.parameter.limit.name=Limit
 rendering.macro.nextmeetings.parameter.homelink.description=Show a link pointing to the Meetings homepage. Possible values are "show" and "hide".
-rendering.macro.nextmeetings.parameter.status.name=Status
+rendering.macro.nextmeetings.parameter.homelink.name=Home Link
 rendering.macro.nextmeetings.parameter.status.description=Show the status of the meeting. Possible values are "show" and "hide".
-
-# XPoll Application
-contrib.meeting.createPoll=Create a poll for this meeting
-contrib.meeting.poll.explanation=A poll has been created in order to define the meeting details. Click on the link below to access it.
-contrib.meeting.poll.go=Go to the poll
-
-# Map Macro
-contrib.meeting.map.error.deactivation=Map could not be displayed:
-contrib.meeting.map.error.zeroResults=no results found!
-contrib.meeting.map.error.overQueryLimit=exceeded quota!
-contrib.meeting.map.error.requestDenied=request denied!
-contrib.meeting.map.error.invalidRequest=invalid request!
-contrib.meeting.map.error.unknownError=unknown error!
+rendering.macro.nextmeetings.parameter.status.name=Status
 
 # Template Provider
-templateProvider.meeting.name=Meeting
-templateProvider.meeting.description=Organise an event</content>
+templateProvider.meeting.description=Organise an event
+templateProvider.meeting.name=Meeting</content>
   <object>
     <name>Meeting.Code.Translations</name>
     <number>0</number>
