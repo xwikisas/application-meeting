@@ -43,7 +43,7 @@
   <scm>
     <connection>scm:git:git://github.com/xwikisas/application-meeting.git</connection>
     <developerConnection>scm:git:git@github.com:xwikisas/application-meeting.git</developerConnection>
-    <url>https://github.com/xwikisas/application-meeting</url>
+    <url>https://github.com/xwikisas/application-meeting/tree/master</url>
     <tag>HEAD</tag>
   </scm>
   <modules>
