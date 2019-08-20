@@ -141,5 +141,8 @@ rendering.macro.nextmeetings.parameter.status.name=Statut
 
 # Template Provider
 templateProvider.meeting.description=Organiser un événement
-templateProvider.meeting.name=Réunion</content>
+templateProvider.meeting.name=Réunion
+
+# Emails
+meeting.invitation.email.type=Invitation de réunion</content>
 </xwikidoc>
