@@ -70,7 +70,7 @@
   #set($vCalendar = '')
   #getVCalendarContent($meetingDoc, $vCalendar)
   #set ($discard = $mailmsg.addPart('text/calendar;method=CANCEL', $vCalendar, {'headers' : {'Content-Class' : 'urn:content-classes:calendarmessage'}}))
-  #set ($discard = $mailmsg.setType($services.localization.render('meeting.invitation.email.type')))
+  #set ($discard = $mailmsg.setType('Meeting invitation'))
   #set ($mailResult = $services.mailsender.send([$mailmsg], 'database'))
   #if ($mailResult &amp;&amp; !$services.mailsender.lastError)
     #set ($discard = $meetingDoc.set('lastEmailSent', $datetool.date))

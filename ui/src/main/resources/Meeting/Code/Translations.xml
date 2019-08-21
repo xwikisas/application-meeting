@@ -134,10 +134,7 @@ rendering.macro.nextmeetings.parameter.status.name=Status
 
 # Template Provider
 templateProvider.meeting.description=Organise an event
-templateProvider.meeting.name=Meeting
-
-# Emails
-meeting.invitation.email.type=Meeting invitation</content>
+templateProvider.meeting.name=Meeting</content>
   <object>
     <name>Meeting.Code.Translations</name>
     <number>0</number>
