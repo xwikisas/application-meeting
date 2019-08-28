@@ -301,7 +301,7 @@
   #foreach($item in $results)
     #set($docReference = $services.model.resolveDocument($item))
     #set($document = $xwiki.getDocument($item))
-    #set ($docName = $document.name)
+    #set ($docName = $document.documentReference.name)
     ## Handle document name for terminal pages.
     #if ($docName == 'WebHome')
       #set ($docName = $document.documentReference.lastSpaceReference.name)
