@@ -92,7 +92,7 @@
     (% class="col-xs-12 col-md-12" %)
     (((
       ; &lt;label for="Meeting.MeetingClass_0_title1"&gt;
-          $services.icon.render('font') $escapetool.xml($doc.displayPrettyName('title1'))
+          $services.icon.render('font') $services.localization.render('contrib.meeting.field.title1')
         &lt;/label&gt;
       : $doc.display('title1')
     )))
