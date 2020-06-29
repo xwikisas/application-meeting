@@ -52,7 +52,6 @@ contrib.meeting.field.duration=Duration
 contrib.meeting.field.groups=Participating groups
 contrib.meeting.field.lastEmailSent=Last mail sent on the
 contrib.meeting.field.leader=Leader
-contrib.meeting.field.title1=Title
 contrib.meeting.field.message=Message
 contrib.meeting.field.notes=Meeting notes
 contrib.meeting.field.participants=Participating members

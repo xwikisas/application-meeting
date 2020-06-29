@@ -45,7 +45,6 @@ Meeting.Code.MeetingClass_status_value3=Zrušený
 Meeting.Code.MeetingClass_status_value4=Dokončené
 contrib.meeting.field.description=Popis
 contrib.meeting.field.duration=Trvanie
-contrib.meeting.field.title1=Názov
 contrib.meeting.field.status=Stav
 contrib.meeting.map.error.overQueryLimit=prekročená kvóta\!
 contrib.meeting.map.error.requestDenied=požiadavka zamietnutá\!

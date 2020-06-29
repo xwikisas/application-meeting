@@ -91,10 +91,10 @@
   (((
     (% class="col-xs-12 col-md-12" %)
     (((
-      ; &lt;label for="Meeting.MeetingClass_0_title1"&gt;
-          $services.icon.render('font') $services.localization.render('contrib.meeting.field.title1')
+      ; &lt;label for="xwikiDocTitleInput"&gt;
+          $services.icon.render('font') $services.localization.render('core.editors.content.titleField.label')
         &lt;/label&gt;
-      : $doc.display('title1')
+      : &lt;input id="xwikiDocTitleInput" type="text" name="title" value="$escapetool.xml($doc.title)"&gt;
     )))
   )))
   #end
