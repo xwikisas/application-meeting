@@ -85,6 +85,19 @@
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 (% class="xform" %)
 (((
+  ## Show title form only in edit mode.
+  #if ($xcontext.action == 'edit')
+  (% class="row" %)
+  (((
+    (% class="col-xs-12 col-md-12" %)
+    (((
+      ; &lt;label for="xwikiDocTitleInput"&gt;
+          $services.icon.render('font') $services.localization.render('core.editors.content.titleField.label')
+        &lt;/label&gt;
+      : &lt;input id="xwikiDocTitleInput" type="text" name="title" value="$escapetool.xml($doc.title)"&gt;
+    )))
+  )))
+  #end
   (% class="row" %)
   (((
     (% class="col-xs-12 col-sm-4" %)
