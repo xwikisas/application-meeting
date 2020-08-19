@@ -56,32 +56,23 @@ $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&
   'status': {"type":"list","size":10},
   '_actions': {"sortable":false,"filterable":false,"html":true,"actions":["delete", "edit"]}
 })
-#set ($currentDate = $xwiki.jodatime.dateTime.millis)
-#set ($endDate = $xwiki.jodatime.dateTime.plusYears(1).millis)
-#set ($parameter = $request.getParameter("meeting"))
-#if ($parameter == "all")
+#set ($options = {
+  'className': 'Meeting.Code.MeetingClass',
+  'translationPrefix': 'meeting.livetable.',
+  'tagCloud': true,
+  'rowCount': 15,
+  'maxPages': 10
+})
+#if ($request.getParameter("meeting") == 'all')
   $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
-  #set ($options = {
-    'className': 'Meeting.Code.MeetingClass',
-    'translationPrefix': 'meeting.livetable.',
-    'tagCloud': true,
-    'rowCount': 15,
-    'maxPages': 10,
-    'selectedColumn': 'startDate',
-    'defaultOrder': 'desc'
-  })
+  #set ($options.selectedColumn = 'startDate')
+  #set ($options.defaultOrder = 'desc')
 #else
   $services.localization.render('contrib.meeting.home.initialMessage', ['[[**', '&gt;&gt;||queryString="meeting=all"]]'])
-  #set ($options = {
-    'className': 'Meeting.Code.MeetingClass',
-    'translationPrefix': 'meeting.livetable.',
-    'tagCloud': true,
-    'rowCount': 15,
-    'maxPages': 10,
-    'selectedColumn': 'startDate',
-    'extraParams': "&amp;endDate=${currentDate}-${endDate}",
-    'defaultOrder': 'asc'
-  })
+  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
+  #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1).millis)
+  #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
+  #set ($options.defaultOrder = 'asc')
 #end
 #set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
 #livetable('meeting' $columns $columnsProperties $options)
