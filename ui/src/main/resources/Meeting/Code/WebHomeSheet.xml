@@ -32,7 +32,7 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <date>1547210090000</date>
-  <contentUpdateDate>1547210090000</contentUpdateDate
+  <contentUpdateDate>1547210090000</contentUpdateDate>
   <version>1.1</version>
   <title/>
   <comment/>
@@ -63,7 +63,7 @@ $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&
   'rowCount': 15,
   'maxPages': 10
 })
-#if ($request.getParameter("meeting") == 'all')
+#if ($request.getParameter('meeting') == 'all')
   $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
   #set ($options.selectedColumn = 'startDate')
   #set ($options.defaultOrder = 'desc')
