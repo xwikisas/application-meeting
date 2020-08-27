@@ -60,11 +60,11 @@ $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&
   'className': 'Meeting.Code.MeetingClass',
   'translationPrefix': 'meeting.livetable.',
   'tagCloud': true,
-  'rowCount': 15
+  'rowCount': 15,
+  'selectedColumn': 'startDate'
 })
 #if ($request.getParameter('meeting') == 'all')
   $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
-  #set ($options.selectedColumn = 'startDate')
   #set ($options.defaultOrder = 'desc')
 #else
   $services.localization.render('contrib.meeting.home.initialMessage', ['[[**', "&gt;&gt;||queryString='meeting=all']]"])
