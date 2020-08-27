@@ -60,6 +60,8 @@ contrib.meeting.field.startDate=Start Date
 contrib.meeting.field.status=Status
 
 contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
+contrib.meeting.home.initialMessage=Below are displayed the meetings available for a year. Click {0}here{1} to view all meetings.
+contrib.meeting.home.allMeetingsMessage=Below are displayed all the meetings created. Click {0}here{1} to view the meetings available for a year.
 contrib.meeting.home.title=Meetings
 
 # Map Macro

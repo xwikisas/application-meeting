@@ -47,24 +47,33 @@
 #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
 $services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&gt;&gt;Meeting.CalendarView]]'])
 #set ($columnsProperties = {
-  'doc.title': {"type":"text","size":10,"link":"view"},
-  'leader': {"type":"text","size":10,"html":true},
-  'place': {"type":"text","size":10},
-  'startDate': {"type":"text","size":10},
-  'durationDisplay': {"type":"text","filterable":true,"sortable":false,"html":true},
-  'status': {"type":"list","size":10},
-  '_actions': {"sortable":false,"filterable":false,"html":true,"actions":["delete", "edit"]}
+  'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
+  'leader': {'type': 'text', 'size': 10, 'html': true},
+  'place': {'type': 'text', 'size': 10},
+  'startDate': {'type': 'text', 'size': 10},
+  'endDate': {'type': 'hidden'},
+  'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
+  'status': {'type': 'list', 'size': 10},
+  '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
 })
 #set ($options = {
   'className': 'Meeting.Code.MeetingClass',
   'translationPrefix': 'meeting.livetable.',
   'tagCloud': true,
   'rowCount': 15,
-  'maxPages': 10,
-  'selectedColumn': 'startDate',
-  'defaultOrder': 'desc'
+  'selectedColumn': 'startDate'
 })
-#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'durationDisplay', 'status', '_actions'])
+#if ($request.getParameter('meeting') == 'all')
+  $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
+  #set ($options.defaultOrder = 'desc')
+#else
+  $services.localization.render('contrib.meeting.home.initialMessage', ['[[**', "&gt;&gt;||queryString='meeting=all']]"])
+  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
+  #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1).millis)
+  #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
+  #set ($options.defaultOrder = 'asc')
+#end
+#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
 #livetable('meeting' $columns $columnsProperties $options)
 {{/velocity}}</content>
 </xwikidoc>
