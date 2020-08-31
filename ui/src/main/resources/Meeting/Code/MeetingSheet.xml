@@ -600,18 +600,18 @@ if(displayMap) {
       <cache>long</cache>
     </property>
     <property>
-      <code>require(['jquery'], function ($) {
-  var convertStringToDate = function(dateStr) {
-    var dateParts = dateStr.split("/");
-    var timeParts = dateParts[2].split(" ")[1].split(":");
-    dateParts[2] = dateParts[2].split(" ")[0];
-    return new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
+      <code>require.config({
+  paths: {
+    'moment': "$services.webjars.url('momentjs', 'min/moment.min')"
   }
-  var compareDates = function(startDate, endDate) {
+});
+
+require(['jquery','moment'], function ($, moment) {
+  // Checks if the start date is lower than the end date and set the disabled property from the save buttons
+  var validateEndDate = function(startDate, endDate) {
+    // Get the save button by checking if the name contains action_save
     var saveButton = $('input[name*=action_save]');
-    var sDate = convertStringToDate(startDate);
-    var eDate = convertStringToDate(endDate);
-    if (sDate &gt;= eDate) {
+    if (moment(startDate, 'DD/MM/YYYY hh:mm:ss') &gt;= moment(endDate, 'DD/MM/YYYY hh:mm:ss')) {
       saveButton.prop('disabled', true);
       new XWiki.widgets.Notification(
         $jsontool.serialize($services.localization.render('contrib.meeting.message.invalidDate')), 'error');
@@ -619,13 +619,11 @@ if(displayMap) {
       saveButton.prop('disabled', false);
     }
   };
+  // Watches the change event placed on the input fields
   var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
   var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
-  startDate.change(function() {
-    compareDates(startDate.val(),endDate.val());
-  });
-  endDate.change(function() {
-    compareDates(startDate.val(),endDate.val());
+  startDate.add(endDate).change(function() {
+    validateEndDate(startDate.val(), endDate.val());
   });
 });</code>
     </property>
