@@ -58,6 +58,7 @@ contrib.meeting.field.participants=Participating members
 contrib.meeting.field.place=Place
 contrib.meeting.field.startDate=Start Date
 contrib.meeting.field.status=Status
+contrib.meeting.message.invalidDate=The selected end date is before the start date of the meeting.
 
 contrib.meeting.home.presentation=Use this application to organise meetings, send invitations and have a {0}calendar{1} overview of all the meetings.
 contrib.meeting.home.initialMessage=Below are displayed the meetings available for a year. Click {0}here{1} to view all meetings.
