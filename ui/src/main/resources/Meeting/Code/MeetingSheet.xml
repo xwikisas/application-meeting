@@ -602,16 +602,17 @@ if(displayMap) {
     <property>
       <code>require.config({
   paths: {
-    'moment': "$services.webjars.url('momentjs', 'min/moment.min')"
+    'moment': $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'))
   }
 });
 
-require(['jquery','moment'], function ($, moment) {
-  // Checks if the start date is lower than the end date and set the disabled property from the save buttons
+require(['jquery', 'moment'], function ($, moment) {
+  // Checks if the start date is lower than the end date and set the disabled property from the save buttons.
   var validateEndDate = function(startDate, endDate) {
-    // Get the save button by checking if the name contains action_save
+    // Get the save button by checking if the name contains action_save.
     var saveButton = $('input[name*=action_save]');
-    if (moment(startDate, 'DD/MM/YYYY hh:mm:ss') &gt;= moment(endDate, 'DD/MM/YYYY hh:mm:ss')) {
+    var dateFormat = 'DD/MM/YYYY hh:mm:ss';
+    if (moment(startDate, dateFormat) &gt;= moment(endDate, dateFormat)) {
       saveButton.prop('disabled', true);
       new XWiki.widgets.Notification(
         $jsontool.serialize($services.localization.render('contrib.meeting.message.invalidDate')), 'error');
@@ -619,7 +620,7 @@ require(['jquery','moment'], function ($, moment) {
       saveButton.prop('disabled', false);
     }
   };
-  // Watches the change event placed on the input fields
+  // Watches the change event placed on the input fields.
   var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
   var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
   startDate.add(endDate).change(function() {
