@@ -515,7 +515,7 @@ if(displayMap) {
       <parse>1</parse>
     </property>
     <property>
-      <use>currentPage</use>
+      <use>onDemand</use>
     </property>
   </object>
   <object>
@@ -635,7 +635,7 @@ require(['jquery', 'moment'], function ($, moment) {
       <parse>1</parse>
     </property>
     <property>
-      <use>currentPage</use>
+      <use>onDemand</use>
     </property>
   </object>
 </xwikidoc>
