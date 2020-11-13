@@ -259,7 +259,9 @@
       <terminal/>
     </property>
     <property>
-      <visibilityRestrictions/>
+      <visibilityRestrictions>
+        <value>Meeting</value>
+      </visibilityRestrictions>
     </property>
   </object>
 </xwikidoc>
