@@ -32,7 +32,7 @@
   <packaging>pom</packaging>
   <name>Meeting application</name>
   <version>1.10-SNAPSHOT</version>
-  <description>Organise meetings (create, view, modify) and send invitations</description>
+  <description>Create and manage meetings. See the meetings inside a calendar. Send email invitations to participants. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
     <licensing.version>1.16</licensing.version>
   </properties>

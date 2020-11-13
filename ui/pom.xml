@@ -30,6 +30,7 @@
   <artifactId>application-meeting-ui</artifactId>
   <packaging>xar</packaging>
   <name>Meeting Application - UI</name>
+  <description>Create and manage meetings. See the meetings inside a calendar. Send email invitations to participants. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
     <xwiki.extension.features>
