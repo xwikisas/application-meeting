@@ -233,7 +233,9 @@
       <action>edit</action>
     </property>
     <property>
-      <creationRestrictions/>
+      <creationRestrictions>
+        <value>Meeting</value>
+      </creationRestrictions>
     </property>
     <property>
       <creationRestrictionsAreSuggestions>0</creationRestrictionsAreSuggestions>
@@ -248,9 +250,7 @@
       <name>templateProvider.meeting.name</name>
     </property>
     <property>
-      <spaces>
-        <value>Meeting</value>
-      </spaces>
+      <spaces/>
     </property>
     <property>
       <template>Meeting.Code.MeetingTemplate</template>
