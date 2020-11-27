@@ -192,19 +192,19 @@
       <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
     </leader>
     <notes>
-      <customDisplay/>
+      <customDisplay>{{include reference="AppWithinMinutes.Content"/}}</customDisplay>
       <disabled>0</disabled>
       <editor>---</editor>
       <name>notes</name>
       <number>14</number>
       <picker>0</picker>
-      <prettyName>notes</prettyName>
+      <prettyName>Notes</prettyName>
       <rows>5</rows>
       <size>40</size>
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      <classType>com.xpn.xwiki.objects.classes.ComputedFieldClass</classType>
     </notes>
     <participants>
       <cache>0</cache>

@@ -165,7 +165,12 @@
           ## description
           #displayMeetingProperty($obj 'description' 'application_view_list')
           ## notes
-          #displayMeetingProperty($obj 'notes' 'application_view_list')
+          #if ($xcontext.action == 'edit' || $doc.content != '')
+            ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_notes"#end&gt;
+                $!services.icon.render('application_view_list') $services.localization.render('contrib.meeting.field.notes')
+              &lt;/label&gt;
+            : $doc.display('notes')
+          #end
           ## poll
           #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
               &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')

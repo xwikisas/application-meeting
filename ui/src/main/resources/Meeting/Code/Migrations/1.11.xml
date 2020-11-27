@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.3" reference="Meeting.Code.Migrations.1\.11" locale="">
+  <web>Meeting.Code.Migrations</web>
+  <name>1.11</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1606456637000</creationDate>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1606463466000</date>
+  <contentUpdateDate>1606457911000</contentUpdateDate>
+  <version>1.1</version>
+  <title>1.11</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity}}
+{{info}}This migrator moves the meeting notes from the **notes** property of Meeting class to the **document content**.{{/info}}
+
+#macro (handleWiki $w)
+  #set ($meetingClass = 'Meeting.Code.MeetingClass')
+  #set ($meetingClassDoc = $xwiki.getDocument("${w}:$meetingClass"))
+  #set ($wikiPrettyName = $services.wiki.getById($w).prettyName)
+  #if ("$!wikiPrettyName.trim()" == '')
+    #set ($wikiPrettyName = $w)
+  #end
+  #if ($meetingClassDoc)
+    #set ($meetings = $services.query.xwql("from doc.object($meetingClass) as meeting order by doc.fullName asc").setWiki($w).addFilter('unique').execute())
+    $services.localization.render('meeting.migrations.wiki') $wikiPrettyName
+    $services.localization.render('meeting.migrations.number') $meetings.size()
+
+    ## Table header
+    |=$services.localization.render('meeting.migrations.document')##
+    |=$services.localization.render('meeting.migrations.status')##
+    |=$services.localization.render('meeting.migrations.properties')
+    #foreach ($md in $meetings)
+      #set ($mDocRef = $services.model.resolveDocument($md, $services.model.createWikiReference($w)))
+      #set ($mDoc = $xwiki.getDocument($mDocRef))
+      #set ($meetingObj = $mDoc.getObject($meetingClass))
+      #set ($notes = $meetingObj.getProperty('notes').value)
+      #set ($saved = $NULL)
+      #if("$!notes" != '')
+        ## Save the meeting notes to the document content.
+        #set ($saved = 'Would be saved on actual run')
+        #if ("$!request.confirm" == 'true')
+          #set ($discard = $mDoc.setContent($notes))
+          #set ($discard = $mDoc.save('Move the meeting notes to the document content'))
+          #set ($saved = 'Saved')
+        #end
+      #end
+      ## Clean the deprecated properties, if there are any
+      #set ($documentToClean = $xwiki.xWiki.getDocument($mDocRef, $xcontext.context))
+      #set ($deprecatedBaseObject = $documentToClean.getObject($meetingClass))
+      #set ($needsSave = false)
+      #set ($cleanedProps = $services.localization.render('meeting.migrations.deprecatedProps'))
+      #foreach ($baseProp in $deprecatedBaseObject.getXClass($xcontext.context).getDeprecatedObjectProperties($deprecatedBaseObject))
+        #if ($baseProp.name == 'notes')
+          #set ($cleanedProps = $baseProp.name)
+          #if ("$!request.confirm" == 'true')
+            #set ($discard = $deprecatedBaseObject.removeField($baseProp.name))
+            #set ($needsSave = true)
+          #end
+        #end
+      #end
+      #if ("$!request.confirm" == 'true' &amp;&amp; $needsSave)
+        ## Set the new author
+        #set ($discard = $documentToClean.setAuthorReference($xcontext.context.userReference))
+        #set ($discard = $xwiki.xWiki.saveDocument($documentToClean,
+          $services.localization.render('core.model.xobject.synchronizeObjects.versionSummary'), true, $xcontext.context))
+      #end
+      |[[$mDoc.prefixedFullName]]|$!saved|$cleanedProps
+    #end
+
+  #end
+#end
+
+#if ("$!request.confirm" != 'true')
+  {{html}}
+    &lt;a href="$doc.getURL('view', 'confirm=true')" class='button'&gt;
+      $services.localization.render('meeting.migrations.button')
+    &lt;/a&gt;
+  {{/html}}
+#end
+
+#set ($wiki = "$!request.wiki")
+#if ($wiki != '')
+  #handleWiki($wiki)
+#else
+  #foreach ($wiki in $services.wiki.getAllIds())
+    #handleWiki($wiki)
+  #end
+#end
+{{/velocity}}</content>
+</xwikidoc>
