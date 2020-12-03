@@ -71,7 +71,7 @@ public class MeetingEntryInlinePage extends InlinePage
     /**
      * The meeting entry notes input field.
      */
-    @FindBy(id = "Meeting.Code.MeetingClass_0_notes")
+    @FindBy(id = "content")
     private WebElement notesInput;
 
     /**

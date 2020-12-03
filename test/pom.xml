@@ -35,6 +35,16 @@
     <xwiki.jacoco.instructionRatio>0.0</xwiki.jacoco.instructionRatio>
     <!-- Functional tests are allowed to output content to the console -->
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
+    <xwikiCfgPlugins>\
+      com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.LinkExtensionPlugin,\
+      com.xpn.xwiki.plugin.jodatime.JodaTimePlugin
+    </xwikiCfgPlugins>
+    <!-- Sending mails requires programming rights. -->
+    <xwikiPropertiesAdditionalProperties>test.prchecker.excludePattern=.*:Meeting\.Code\.SendInvitationEmail</xwikiPropertiesAdditionalProperties>
   </properties>
   <dependencies>
     <dependency>
