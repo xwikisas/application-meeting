@@ -628,7 +628,9 @@ require(['jquery', 'moment'], function ($, moment) {
   // Watches the change event placed on the input fields.
   var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
   var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
-  startDate.add(endDate).change(function() {
+  // From XWiki 11.7, the 'change' event is not triggered anymore on the new Date Time Picker,
+  // so we need to listen also the 'dp.change' event.
+  startDate.add(endDate).on('change dp.change', function() {
     validateEndDate(startDate.val(), endDate.val());
   });
 });</code>
