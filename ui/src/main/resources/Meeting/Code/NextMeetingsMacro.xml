@@ -306,7 +306,7 @@
         #if($xcontext.macro.params.status == 'show')
           #set($status = "- $services.localization.render('contrib.meeting.field.status') : $document.display('status', 'view')")
         #end
-        * $services.icon.render('time') (% class="text-muted" %) [[$document.plainTitle&gt;&gt;$item]] $document.display('startDate','view') $!status
+        * $services.icon.render('time')(% class="text-muted" %) [[$document.plainTitle&gt;&gt;$item]] $document.display('startDate','view') $!status
     #end
   #end
 )))
