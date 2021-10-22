@@ -21,11 +21,11 @@ package org.xwiki.contrib.meeting.test.ui.po;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.xwiki.test.ui.po.InlinePage;
+import org.xwiki.test.ui.po.SuggestInputElement;
 
 /**
  * Represents the meeting entry inline page.
@@ -38,11 +38,6 @@ public class MeetingEntryInlinePage extends InlinePage
      * Value attribute name.
      */
     public static final String VALUE_ATTRIBUTE_NAME = "Value";
-
-    /**
-     * Suggest item class name.
-     */
-    public static final String SUGGEST_ITEM_CLASS_NAME = "suggestItem";
 
     /**
      * The meeting entry start date input field.
@@ -214,11 +209,8 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public void setLeader(String leader)
     {
-        leaderInput.clear();
-        leaderInput.sendKeys(leader);
-        getDriver().waitUntilElementIsVisible(By.className(SUGGEST_ITEM_CLASS_NAME));
-        getDriver().findElementWithoutWaiting(By.className(SUGGEST_ITEM_CLASS_NAME)).click();
-        getDriver().waitUntilElementDisappears(By.className(SUGGEST_ITEM_CLASS_NAME));
+        new SuggestInputElement(this.leaderInput).clearSelectedSuggestions().sendKeys(leader).waitForSuggestions()
+            .selectByVisibleText(leader).hideSuggestions();
     }
 
     /**
@@ -228,11 +220,11 @@ public class MeetingEntryInlinePage extends InlinePage
      */
     public void setParticipants(List<String> participants)
     {
+        SuggestInputElement participantsSuggestInput = new SuggestInputElement(this.participantsInput);
+        participantsSuggestInput.clearSelectedSuggestions();
         for (String participant : participants) {
-            participantsInput.sendKeys(participant);
-            getDriver().waitUntilElementIsVisible(By.className(SUGGEST_ITEM_CLASS_NAME));
-            getDriver().findElementWithoutWaiting(By.className(SUGGEST_ITEM_CLASS_NAME)).click();
-            getDriver().waitUntilElementDisappears(By.className(SUGGEST_ITEM_CLASS_NAME));
+            participantsSuggestInput.sendKeys(participant).waitForSuggestions().selectByVisibleText(participant);
         }
+        participantsSuggestInput.hideSuggestions();
     }
 }

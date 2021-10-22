@@ -67,9 +67,9 @@ public class MeetingTest extends AbstractTest
     public void sendMeetingInvitation() throws Exception
     {
         // Configure the SMTP host/port for the wiki so that it points to GreenMail.
-        getUtil().addObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences");
-        getUtil().updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "smtp_port", 3025);
-        getUtil().updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "smtp_server", "localhost");
+        getUtil().addObject("Mail", "MailConfig", "Mail.SendMailConfigClass");
+        getUtil().updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "port", 3025);
+        getUtil().updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "host", "localhost");
 
         // Create some participants to meetings
         getUtil().createUser("participant1", "password", getUtil().getURLToNonExistentPage(), "email",
@@ -126,6 +126,15 @@ public class MeetingTest extends AbstractTest
             this.mail.getReceivedMessages()[0].getSubject());
         Assert.assertEquals("You are invited to participate in a meeting: Meeting 01",
             this.mail.getReceivedMessages()[1].getSubject());
+
+        validateConsole.getLogCaptureConfiguration().registerExpected(
+            "The Licensor API extension (com.xwiki.licensing:application-licensing-licensor-api)" +
+                " is not installed on the root namespace as it should."
+        );
+        validateConsole.getLogCaptureConfiguration().registerExcludes(
+            "TLS certificate errors will be ignored for this session",
+            "Failed to find a Converter to convert from [java.lang.String] to [org.xwiki.observation.event.Event]"
+        );
     }
 
     private String getDateTomorrow()
