@@ -617,13 +617,23 @@ if(displayMap) {
       <cache>long</cache>
     </property>
     <property>
-      <code>require.config({
-  paths: {
-    'moment': $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'))
-  }
-});
+      <code>require(['jquery'], function ($) {
+  // Delay the momentjs configuration after the page is loaded.
+  $(function() {
+    if (!require.specified('moment')) {
+      // Configure the momentjs module only if it's not already configured (by the date picker) otherwise we risk
+      // breaking the configuration (because the date picker configures momentjs as a package).
+      require.config({
+        paths: {
+          'moment': $jsontool.serialize($services.webjars.url('momentjs', 'min/moment.min'))
+        }
+      });
+    }
+    require(['moment'], function(moment) {
+      addDateValidation(moment);
+    });
+  });
 
-require(['jquery', 'moment'], function ($, moment) {
   var invalidDateNotification = new XWiki.widgets.Notification(
     $jsontool.serialize($services.localization.render('contrib.meeting.message.invalidDate')),
     'error',
@@ -631,23 +641,22 @@ require(['jquery', 'moment'], function ($, moment) {
   );
 
   // Checks if the start date is lower than the end date and set the disabled property from the save buttons.
-  var validateEndDate = function(startDate, endDate) {
+  var validateEndDate = function(startDate, endDate, moment) {
     // Get the save button by checking if the name contains action_save.
     var saveButton = $('input[name*=action_save]');
     var dateFormat = 'DD/MM/YYYY hh:mm:ss';
-    if (moment(startDate, dateFormat).isAfter(moment(endDate, dateFormat))) {
-      saveButton.prop('disabled', true);
-      invalidDateNotification.show();
-    } else {
-      saveButton.prop('disabled', false);
-    }
+    saveButton.prop('disabled', moment(startDate, dateFormat).isAfter(moment(endDate, dateFormat)));
+    invalidDateNotification[saveButton.prop('disabled') ? 'show' : 'hide']();
   };
-  // Validate the start and end dates whenever the corresponding date inputs lose the focus.
-  var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
-  var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
-  startDate.add(endDate).blur(function() {
-    validateEndDate(startDate.val(), endDate.val());
-  });
+
+  var addDateValidation = function(moment) {
+    // Validate the start and end dates whenever the corresponding date inputs lose the focus.
+    var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
+    var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
+    startDate.add(endDate).blur(function() {
+      validateEndDate(startDate.val(), endDate.val(), moment);
+    });
+  };
 });</code>
     </property>
     <property>
