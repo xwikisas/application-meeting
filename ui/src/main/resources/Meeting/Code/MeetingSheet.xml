@@ -624,25 +624,28 @@ if(displayMap) {
 });
 
 require(['jquery', 'moment'], function ($, moment) {
+  var invalidDateNotification = new XWiki.widgets.Notification(
+    $jsontool.serialize($services.localization.render('contrib.meeting.message.invalidDate')),
+    'error',
+    {inactive: true}
+  );
+
   // Checks if the start date is lower than the end date and set the disabled property from the save buttons.
   var validateEndDate = function(startDate, endDate) {
     // Get the save button by checking if the name contains action_save.
     var saveButton = $('input[name*=action_save]');
     var dateFormat = 'DD/MM/YYYY hh:mm:ss';
-    if (moment(startDate, dateFormat) &gt;= moment(endDate, dateFormat)) {
+    if (moment(startDate, dateFormat).isAfter(moment(endDate, dateFormat))) {
       saveButton.prop('disabled', true);
-      new XWiki.widgets.Notification(
-        $jsontool.serialize($services.localization.render('contrib.meeting.message.invalidDate')), 'error');
+      invalidDateNotification.show();
     } else {
       saveButton.prop('disabled', false);
     }
   };
-  // Watches the change event placed on the input fields.
+  // Validate the start and end dates whenever the corresponding date inputs lose the focus.
   var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
   var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
-  // From XWiki 11.7, the 'change' event is not triggered anymore on the new Date Time Picker,
-  // so we need to listen also the 'dp.change' event.
-  startDate.add(endDate).on('change dp.change', function() {
+  startDate.add(endDate).blur(function() {
     validateEndDate(startDate.val(), endDate.val());
   });
 });</code>
