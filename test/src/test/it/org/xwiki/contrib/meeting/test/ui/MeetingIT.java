@@ -23,39 +23,40 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryInlinePage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryPage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingHomePage;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.SuperAdminAuthenticationRule;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.CreatePagePage;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * UI tests for the Meeting application feature.
+ * 
+ * @since 1.13
  */
-public class MeetingTest extends AbstractTest
+@UITest
+public class MeetingIT
 {
-    @Rule
-    public SuperAdminAuthenticationRule authenticationRule = new SuperAdminAuthenticationRule(getUtil());
-
     private GreenMail mail;
 
-    @Before
+    @BeforeEach
     public void startMail()
     {
         this.mail = new GreenMail(ServerSetupTest.SMTP);
         this.mail.start();
     }
 
-    @After
+    @AfterEach
     public void stopMail()
     {
         if (this.mail != null) {
@@ -64,25 +65,27 @@ public class MeetingTest extends AbstractTest
     }
 
     @Test
-    public void sendMeetingInvitation() throws Exception
+    public void sendMeetingInvitation(TestUtils setup) throws Exception
     {
+        setup.loginAsSuperAdmin();
+        
         // Configure the SMTP host/port for the wiki so that it points to GreenMail.
-        getUtil().addObject("Mail", "MailConfig", "Mail.SendMailConfigClass");
-        getUtil().updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "port", 3025);
-        getUtil().updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "host", "localhost");
+        setup.addObject("Mail", "MailConfig", "Mail.SendMailConfigClass");
+        setup.updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "port", 3025);
+        setup.updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "host", "localhost");
 
         // Create some participants to meetings
-        getUtil().createUser("participant1", "password", getUtil().getURLToNonExistentPage(), "email",
+        setup.createUser("participant1", "password", setup.getURLToNonExistentPage(), "email",
             "participant1@xwiki.org", "first_name", "participant1", "last_name", "Doe");
-        getUtil().createUser("participant2", "password", getUtil().getURLToNonExistentPage(), "email",
+        setup.createUser("participant2", "password", setup.getURLToNonExistentPage(), "email",
             "participant2@xwiki.org", "first_name", "participant2", "last_name", "Doe");
 
         // Create user to be Leader of meeting
-        getUtil().createUserAndLogin("JohnDoe", "password", "email", "john@xwiki.org", "first_name", "John",
+        setup.createUserAndLogin("JohnDoe", "password", "email", "john@xwiki.org", "first_name", "John",
             "last_name", "Doe");
 
         // Remove existing meeting
-        getUtil().deletePage("Meeting", "Meeting 01");
+        setup.deletePage("Meeting", "Meeting 01");
 
         // Create new meeting
         MeetingHomePage meetingHomePage = MeetingHomePage.gotoPage();
@@ -116,25 +119,16 @@ public class MeetingTest extends AbstractTest
         meetingEntryPage.sendMessage();
 
         // Verify that the mail has been sent.
-        Assert.assertTrue(meetingEntryPage.getNotification()
+        assertTrue(meetingEntryPage.getNotification()
             .contains("A notification email has successfully been sent to the participants."));
         
         // Verify that the mail has been received.
         this.mail.waitForIncomingEmail(10000L, 2);
-        Assert.assertEquals(2, this.mail.getReceivedMessages().length);
-        Assert.assertEquals("You are invited to participate in a meeting: Meeting 01",
+        assertEquals(2, this.mail.getReceivedMessages().length);
+        assertEquals("You are invited to participate in a meeting: Meeting 01",
             this.mail.getReceivedMessages()[0].getSubject());
-        Assert.assertEquals("You are invited to participate in a meeting: Meeting 01",
+        assertEquals("You are invited to participate in a meeting: Meeting 01",
             this.mail.getReceivedMessages()[1].getSubject());
-
-        validateConsole.getLogCaptureConfiguration().registerExpected(
-            "The Licensor API extension (com.xwiki.licensing:application-licensing-licensor-api)" +
-                " is not installed on the root namespace as it should."
-        );
-        validateConsole.getLogCaptureConfiguration().registerExcludes(
-            "TLS certificate errors will be ignored for this session",
-            "Failed to find a Converter to convert from [java.lang.String] to [org.xwiki.observation.event.Event]"
-        );
     }
 
     private String getDateTomorrow()
