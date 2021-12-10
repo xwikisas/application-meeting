@@ -34,7 +34,7 @@
   <version>1.13-SNAPSHOT</version>
   <description>Create and manage meetings. See the meetings inside a calendar. Send email invitations to participants. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
-    <licensing.version>1.21-SNAPSHOT</licensing.version>
+    <licensing.version>1.21</licensing.version>
   </properties>
   <issueManagement>
     <system>GitHub</system>
