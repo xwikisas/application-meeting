@@ -161,47 +161,6 @@
           #end
           ## description
           #displayMeetingProperty($obj 'description' 'application_view_list')
-          ## notes
-          #if ($xcontext.action == 'edit' || $doc.content != '')
-            ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_notes"#end&gt;
-                $!services.icon.render('application_view_list') $services.localization.render('contrib.meeting.field.notes')
-              &lt;/label&gt;
-            : $doc.display('notes')
-          #end
-          ## poll
-          #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
-              &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
-            #setPollName()
-            #checkHasPoll($pollName)
-            #if(!$hasPoll)
-              &lt;form id="createXPoll" action='' method='get'&gt;
-                &lt;div class='presentation'&gt;
-                  &lt;input type='hidden' name='createPoll' value='true'&gt;
-                  &lt;input type="hidden" name="parent" value="Meeting.WebHome" /&gt;
-                  &lt;input type="hidden" name="template" value="XPoll.XPollTemplate" /&gt;
-                  &lt;span class='buttonwrapper'&gt;
-                    &lt;input type='submit' class='button'
-                        value="$services.localization.render('contrib.meeting.createPoll')"/&gt;
-                  &lt;/span&gt;
-                &lt;/div&gt;
-              &lt;/form&gt;
-            #else
-              #set($url = $xwiki.getURL("XPoll.$pollName"))
-              &lt;form action=$url method='post'&gt;
-                &lt;div class='presentation'&gt;
-                  &lt;p&gt;
-                    &lt;label&gt;
-                      $services.localization.render('contrib.meeting.poll.explanation')
-                    &lt;/label&gt;
-                  &lt;/p&gt;
-                  &lt;span class='buttonwrapper'&gt;
-                    &lt;input type='submit' class='button'
-                        value="$services.localization.render('contrib.meeting.poll.go')"/&gt;
-                  &lt;/span&gt;
-                &lt;/div&gt;
-              &lt;/form&gt;
-            #end
-          #end
         )))
       )))
     )))
@@ -242,6 +201,61 @@
                 value="$services.localization.render('contrib.meeting.notification.submit')"/&gt;
           &lt;/div&gt;
         &lt;/form&gt;
+      #end
+    )))
+  )))
+
+  ## notes
+  #if ($xcontext.action == 'edit' || $doc.content != '')
+  (% class="row" %)
+  (((
+    (% class="col-xs-12" %)
+    (((
+      ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_notes"#end&gt;
+          $!services.icon.render('application_view_list') $services.localization.render('contrib.meeting.field.notes')
+        &lt;/label&gt;
+      : $doc.display('notes')
+    )))
+  )))
+  #end
+
+  (% class="row" %)
+  (((
+    (% class="col-xs-12" %)
+    (((
+      ## poll
+      #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
+          &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
+        #setPollName()
+        #checkHasPoll($pollName)
+        #if(!$hasPoll)
+          &lt;form id="createXPoll" action='' method='get'&gt;
+            &lt;div class='presentation'&gt;
+              &lt;input type='hidden' name='createPoll' value='true'&gt;
+              &lt;input type="hidden" name="parent" value="Meeting.WebHome" /&gt;
+              &lt;input type="hidden" name="template" value="XPoll.XPollTemplate" /&gt;
+              &lt;span class='buttonwrapper'&gt;
+                &lt;input type='submit' class='button'
+                    value="$services.localization.render('contrib.meeting.createPoll')"/&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        #else
+          #set($url = $xwiki.getURL("XPoll.$pollName"))
+          &lt;form action=$url method='post'&gt;
+            &lt;div class='presentation'&gt;
+              &lt;p&gt;
+                &lt;label&gt;
+                  $services.localization.render('contrib.meeting.poll.explanation')
+                &lt;/label&gt;
+              &lt;/p&gt;
+              &lt;span class='buttonwrapper'&gt;
+                &lt;input type='submit' class='button'
+                    value="$services.localization.render('contrib.meeting.poll.go')"/&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        #end
       #end
     )))
   )))
