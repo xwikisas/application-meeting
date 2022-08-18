@@ -97,6 +97,14 @@ meeting.extension.name=Meeting Application (Pro)
 meeting.durationDisplay.label=Meeting Duration
 meeting.home.migrations=Some properties have been changed since your last upgrade. Please follow the next link/s to complete the migration:
 
+meeting.pastMeetings.title=Past Meetings
+meeting.futureMeetings.title=Future Meetings
+
+Meeting.Code.ConfigurationClass_defaultTab=The default tab that will be displayed on the Meetings page.
+Meeting.Code.ConfigurationClass_defaultTab_past=Past Meetings Tab
+Meeting.Code.ConfigurationClass_defaultTab_future=Future Meetings Tab
+Meeting.Code.ConfigurationClass_defaultTab_calendar=Calendar View Tab
+
 meeting.livetable._actions=Actions
 meeting.livetable.doc.name=Title
 meeting.livetable.doc.title=Meeting
@@ -106,6 +114,7 @@ meeting.livetable.emptyvalue=-
 meeting.livetable.leader=Leader
 meeting.livetable.place=Place
 meeting.livetable.startDate=Start
+meeting.livetable.endDate=End
 meeting.livetable.status=Status
 
 meeting.migrations.button=Execute the modification

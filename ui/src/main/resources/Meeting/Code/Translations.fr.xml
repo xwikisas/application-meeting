@@ -100,6 +100,14 @@ meeting.extension.name=Application Réunion (Pro)
 meeting.durationDisplay.label=Durée de la réunion
 meeting.home.migrations=Certaines propriétés ont été modifiées depuis votre dernière mise à jour. Veuillez suivre le(s) lien(s) suivant(s) pour terminer la migration :
 
+meeting.pastMeetings.title=Passées
+meeting.futureMeetings.title=À venir
+
+Meeting.Code.ConfigurationClass_defaultTab=L'onglet par défaut qui sera affiché sur la page des réunions.
+Meeting.Code.ConfigurationClass_defaultTab_past=Réunions passées
+Meeting.Code.ConfigurationClass_defaultTab_future=Réunions à venir
+Meeting.Code.ConfigurationClass_defaultTab_calendar=Calendrier
+
 meeting.livetable._actions=Actions
 meeting.livetable.doc.name=Titre
 meeting.livetable.doc.title=Réunion
@@ -109,6 +117,7 @@ meeting.livetable.emptyvalue=-
 meeting.livetable.leader=Responsable
 meeting.livetable.place=Lieu
 meeting.livetable.startDate=Horaire
+meeting.livetable.endDate=Fin
 meeting.livetable.status=Statut
 
 meeting.migrations.button=Exécuter la modification

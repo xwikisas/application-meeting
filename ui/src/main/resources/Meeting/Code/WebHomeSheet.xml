@@ -36,41 +36,92 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
+  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
+{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
 
 {{velocity}}
-#set($docextras = [])
-#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
-#set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
-$services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&gt;&gt;Meeting.CalendarView]]'])
-#set ($columnsProperties = {
-  'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
-  'leader': {'type': 'text', 'size': 10, 'html': true},
-  'place': {'type': 'text', 'size': 10},
-  'startDate': {'type': 'text', 'size': 10},
-  'endDate': {'type': 'hidden'},
-  'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
-  'status': {'type': 'list', 'size': 10},
-  '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
-})
-#set ($options = {
-  'className': 'Meeting.Code.MeetingClass',
-  'translationPrefix': 'meeting.livetable.',
-  'tagCloud': true,
-  'rowCount': 15,
-  'selectedColumn': 'startDate'
-})
-#if ($request.getParameter('meeting') == 'all')
-  $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
-  #set ($options.defaultOrder = 'desc')
+#set ($configClassReference = $services.model.createDocumentReference('', ['Meeting', 'Code'], 'ConfigurationClass'))
+#set ($hasLicense = $services.licensing.licensor.hasLicensureForEntity($configClassReference))
+#if (!$hasLicense)
+  {{error}}#getMissingLicenseMessage('meeting.extension.name'){{/error}}
 #else
-  $services.localization.render('contrib.meeting.home.initialMessage', ['[[**', "&gt;&gt;||queryString='meeting=all']]"])
-  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
-  #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1).millis)
-  #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
-  #set ($options.defaultOrder = 'asc')
+## Display tabs
+#if("$!{view}" == '')
+  #set($view = $request.getParameter('view'))
+  #if("$!{view}" == '')
+    #set ($configClass = "Meeting.Code.ConfigurationClass")
+    #set ($configDoc = $xwiki.getDocument('Meeting.Code.Configuration'))
+    #set ($configObj = $configDoc.getObject($configClass))
+    #set ($view = $configObj.getProperty('defaultTab').getValue())
+    #if("$!{view}" == '')
+      #set ($view = 'past')
+    #end
+  #end
 #end
-#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
-#livetable('meeting' $columns $columnsProperties $options)
+
+#set($tabs = [])
+#macro(addAllDocsTab $tab)
+  #if($xwiki.hasAccessLevel('view', "$!xcontext.user", $tab.get('document')))
+    #set($discard = $tabs.add($tab))
+  #end
+#end
+
+#addAllDocsTab({'tabName' : 'past', 'idSuffix' : 'pastMeetings', 'translationKey' : 'meeting.pastMeetings.title'})
+#addAllDocsTab({'tabName' : 'future', 'idSuffix' : 'futureMeetings', 'translationKey' : 'meeting.futureMeetings.title'})
+#addAllDocsTab({'tabName' : 'calendar', 'idSuffix' : 'meetingsCalendar', 'translationKey' : 'contrib.meeting.calendarView.title'})
+
+{{html}}
+&lt;div class="floatcontainer"&gt;
+  &lt;ul class="xwikitabbar"&gt;
+#foreach ($tab in $tabs)
+  &lt;li id="xwiki$tab['idSuffix']"#if($view == $tab['tabName']) class="active"#end&gt;&lt;a href="$doc.getURL('view', "view=$tab['tabName']&amp;amp;$!param")"&gt;$services.localization.render($tab['translationKey'])&lt;/a&gt;&lt;/li&gt;
+#end
+  &lt;/ul&gt;
+&lt;/div&gt;
+{{/html}}
+
+#if ($view == 'calendar')
+  {{html wiki="true"}}
+    {{include reference='Meeting.CalendarView'/}}
+  {{/html}}
+#else
+  #set($docextras = [])
+  #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
+  #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
+  #set ($columnsProperties = {
+    'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
+    'leader': {'type': 'text', 'size': 10, 'html': true},
+    'place': {'type': 'text', 'size': 10},
+    'startDate': {'type': 'text', 'size': 10},
+    'endDate': {'type': 'text', 'size': 10},
+    'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
+    'status': {'type': 'list', 'size': 10},
+    '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
+  })
+  #set ($options = {
+    'className': 'Meeting.Code.MeetingClass',
+    'translationPrefix': 'meeting.livetable.',
+    'tagCloud': true,
+    'rowCount': 15
+  })
+  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
+
+  #if ($view == "past")
+    #set ($options.selectedColumn = 'endDate')
+    #set ($options.extraParams = "&amp;endDate=0-${currentDate}")
+    #set ($options.defaultOrder = 'desc')
+  #else
+    #set ($options.selectedColumn = 'startDate')
+    #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1000).millis)
+    #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
+    #set ($options.defaultOrder = 'asc')
+  #end
+
+  #set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
+  #livetable('meeting' $columns $columnsProperties $options)
+#end
+
+#end
+
 {{/velocity}}</content>
 </xwikidoc>
