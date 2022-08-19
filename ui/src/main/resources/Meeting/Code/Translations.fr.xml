@@ -102,6 +102,7 @@ meeting.home.migrations=Certaines propriétés ont été modifiées depuis votre
 
 meeting.pastMeetings.title=Passées
 meeting.futureMeetings.title=À venir
+meeting.panel.activeMeeting=En cours
 
 Meeting.Code.ConfigurationClass_defaultTab=L'onglet par défaut qui sera affiché sur la page des réunions.
 Meeting.Code.ConfigurationClass_defaultTab_past=Réunions passées
@@ -143,6 +144,8 @@ rendering.macro.nextmeetings.parameter.limit.description=Nombre maximum de réun
 rendering.macro.nextmeetings.parameter.limit.name=Nombre de réunions affichées
 rendering.macro.nextmeetings.parameter.status.description=Afficher le statut de la réunion. Les valeurs possibles sont "show" (afficher) et "hide" (cacher).
 rendering.macro.nextmeetings.parameter.status.name=Statut
+rendering.macro.nextmeetings.parameter.displayOnGoingMeetings.name=Afficher les réunions en cours
+rendering.macro.nextmeetings.parameter.displayOnGoingMeetings.description=Afficher les réunions en cours si cette case est cochée.
 
 # Template Provider
 templateProvider.meeting.description=Organiser un événement
