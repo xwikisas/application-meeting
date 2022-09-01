@@ -45,8 +45,7 @@
 #if (!$hasLicense)
   {{error}}#getMissingLicenseMessage('meeting.extension.name'){{/error}}
 #else
-## Display tabs
-#if("$!{view}" == '')
+  ## Display tabs
   #set($view = $request.getParameter('view'))
   #if("$!{view}" == '')
     #set ($configClass = "Meeting.Code.ConfigurationClass")
@@ -57,70 +56,73 @@
       #set ($view = 'past')
     #end
   #end
-#end
 
-#set($tabs = [])
-#macro(addAllDocsTab $tab)
-  #if($xwiki.hasAccessLevel('view', "$!xcontext.user", $tab.get('document')))
-    #set($discard = $tabs.add($tab))
-  #end
-#end
+  #set($tabs = [])
 
-#addAllDocsTab({'tabName' : 'past', 'idSuffix' : 'pastMeetings', 'translationKey' : 'meeting.pastMeetings.title'})
-#addAllDocsTab({'tabName' : 'future', 'idSuffix' : 'futureMeetings', 'translationKey' : 'meeting.futureMeetings.title'})
-#addAllDocsTab({'tabName' : 'calendar', 'idSuffix' : 'meetingsCalendar', 'translationKey' : 'contrib.meeting.calendarView.title'})
+  #set($discard = $tabs.add({'tabName' : 'past', 'idSuffix' : 'pastMeetings', 'translationKey' : 'meeting.pastMeetings.title'}))
+  #set($discard = $tabs.add({'tabName' : 'future', 'idSuffix' : 'futureMeetings', 'translationKey' : 'meeting.futureMeetings.title'}))
+  #set($discard = $tabs.add({'tabName' : 'calendar', 'idSuffix' : 'meetingsCalendar', 'translationKey' : 'contrib.meeting.calendarView.title'}))
 
-{{html}}
-&lt;div class="floatcontainer"&gt;
-  &lt;ul class="xwikitabbar"&gt;
-#foreach ($tab in $tabs)
-  &lt;li id="xwiki$tab['idSuffix']"#if($view == $tab['tabName']) class="active"#end&gt;&lt;a href="$doc.getURL('view', "view=$tab['tabName']&amp;amp;$!param")"&gt;$services.localization.render($tab['translationKey'])&lt;/a&gt;&lt;/li&gt;
-#end
-  &lt;/ul&gt;
-&lt;/div&gt;
-{{/html}}
+  {{html clean="false" wiki="true"}}
+  &lt;div&gt;
+    &lt;ul class="nav nav-tabs" role="tablist"&gt;
+    #foreach ($tab in $tabs)
+      &lt;li #if($view == $tab['tabName']) class="active"#end
+        ## When clicking on the Calendar tab, the calendar itself is not displayed properly. Resizing the window will
+        ## fix it.
+        #if($tab['tabName'] == 'calendar')onclick="window.dispatchEvent(new Event('resize'))"#end
+        role="presentation" id="xwiki$tab['idSuffix']"&gt;
+        &lt;a href="#$tab['tabName']" aria-controls="$tab['tabName']" role="tab" data-toggle="tab"&gt;
+          $services.localization.render($tab['translationKey'])
+        &lt;/a&gt;
+      &lt;/li&gt;
+    #end
+    &lt;/ul&gt;
+  &lt;/div&gt;
 
-#if ($view == 'calendar')
-  {{html wiki="true"}}
-    {{include reference='Meeting.CalendarView'/}}
-  {{/html}}
-#else
-  #set($docextras = [])
-  #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
-  #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
-  #set ($columnsProperties = {
-    'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
-    'leader': {'type': 'text', 'size': 10, 'html': true},
-    'place': {'type': 'text', 'size': 10},
-    'startDate': {'type': 'text', 'size': 10},
-    'endDate': {'type': 'text', 'size': 10},
-    'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
-    'status': {'type': 'list', 'size': 10},
-    '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
-  })
-  #set ($options = {
-    'className': 'Meeting.Code.MeetingClass',
-    'translationPrefix': 'meeting.livetable.',
-    'tagCloud': true,
-    'rowCount': 15
-  })
-  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
-
-  #if ($view == "past")
+  &lt;div class="tab-content"&gt;
+    ## Display Calendar tab.
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'calendar')active#end" id="calendar"&gt;
+      {{include reference='Meeting.CalendarView'/}}
+    &lt;/div&gt;
+    ## Prepare livetable parameters.
+    #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
+    #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
+    #set ($columnsProperties = {
+      'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
+      'leader': {'type': 'text', 'size': 10, 'html': true},
+      'place': {'type': 'text', 'size': 10},
+      'startDate': {'type': 'text', 'size': 10},
+      'endDate': {'type': 'text', 'size': 10},
+      'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
+      'status': {'type': 'list', 'size': 10},
+      '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
+    })
+    #set ($options = {
+      'className': 'Meeting.Code.MeetingClass',
+      'translationPrefix': 'meeting.livetable.',
+      'tagCloud': true,
+      'rowCount': 15
+    })
+    #set ($currentDate = $xwiki.jodatime.dateTime.millis)
+    #set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
+    ## Display past meetings table.
     #set ($options.selectedColumn = 'endDate')
     #set ($options.extraParams = "&amp;endDate=0-${currentDate}")
     #set ($options.defaultOrder = 'desc')
-  #else
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'past')active#end" id="past"&gt;
+      #livetable('meetingsPast' $columns $columnsProperties $options)
+    &lt;/div&gt;
+    ## Display future meetings table.
     #set ($options.selectedColumn = 'startDate')
     #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1000).millis)
     #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
     #set ($options.defaultOrder = 'asc')
-  #end
-
-  #set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
-  #livetable('meeting' $columns $columnsProperties $options)
-#end
-
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'future')active#end" id="future"&gt;
+      #livetable('meetingsFuture' $columns $columnsProperties $options)
+    &lt;/div&gt;
+  &lt;/div&gt;
+  {{/html}}
 #end
 
 {{/velocity}}</content>

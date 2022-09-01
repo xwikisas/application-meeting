@@ -36,7 +36,10 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>contrib.hr.notification.additionalPart=His/her message:
+  <content>admin.meetings=Meetings
+admin.meetings.description=Configure the homepage of your Meetings Application.
+
+contrib.hr.notification.additionalPart=His/her message:
 contrib.meeting.app.title=Meetings
 contrib.meeting.calendarView=Calendar View
 contrib.meeting.calendarView.noMacro.admin=To display the calendar view of the meetings, you need to install the Full Calendar Macro on this wiki :
@@ -102,9 +105,9 @@ meeting.futureMeetings.title=Future Meetings
 meeting.panel.activeMeeting=On Going
 
 Meeting.Code.ConfigurationClass_defaultTab=The default tab that will be displayed on the Meetings page.
-Meeting.Code.ConfigurationClass_defaultTab_past=Past Meetings Tab
-Meeting.Code.ConfigurationClass_defaultTab_future=Future Meetings Tab
-Meeting.Code.ConfigurationClass_defaultTab_calendar=Calendar View Tab
+Meeting.Code.ConfigurationClass_defaultTab_past=Past Meetings
+Meeting.Code.ConfigurationClass_defaultTab_future=Future Meetings
+Meeting.Code.ConfigurationClass_defaultTab_calendar=Calendar View
 
 meeting.livetable._actions=Actions
 meeting.livetable.doc.name=Title
