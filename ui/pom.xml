@@ -136,5 +136,17 @@
       <version>${platform.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Replaces transitive dependency on com.sun.mail:javax.mail from ical4j (macro-fullcalendar-ui) -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Added here because we excluded it as transitive dependency of ical4j (macro-fullcalendar-ui) -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
 </project>
