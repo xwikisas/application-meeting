@@ -100,6 +100,15 @@ meeting.extension.name=Application Réunion (Pro)
 meeting.durationDisplay.label=Durée de la réunion
 meeting.home.migrations=Certaines propriétés ont été modifiées depuis votre dernière mise à jour. Veuillez suivre le(s) lien(s) suivant(s) pour terminer la migration :
 
+meeting.pastMeetings.title=Passées
+meeting.futureMeetings.title=À venir
+meeting.panel.activeMeeting=En cours
+
+Meeting.Code.ConfigurationClass_defaultTab=L'onglet par défaut qui sera affiché sur la page des réunions.
+Meeting.Code.ConfigurationClass_defaultTab_past=Réunions passées
+Meeting.Code.ConfigurationClass_defaultTab_future=Réunions à venir
+Meeting.Code.ConfigurationClass_defaultTab_calendar=Calendrier
+
 meeting.livetable._actions=Actions
 meeting.livetable.doc.name=Titre
 meeting.livetable.doc.title=Réunion
@@ -109,6 +118,7 @@ meeting.livetable.emptyvalue=-
 meeting.livetable.leader=Responsable
 meeting.livetable.place=Lieu
 meeting.livetable.startDate=Horaire
+meeting.livetable.endDate=Fin
 meeting.livetable.status=Statut
 
 meeting.migrations.button=Exécuter la modification
@@ -134,6 +144,8 @@ rendering.macro.nextmeetings.parameter.limit.description=Nombre maximum de réun
 rendering.macro.nextmeetings.parameter.limit.name=Nombre de réunions affichées
 rendering.macro.nextmeetings.parameter.status.description=Afficher le statut de la réunion. Les valeurs possibles sont "show" (afficher) et "hide" (cacher).
 rendering.macro.nextmeetings.parameter.status.name=Statut
+rendering.macro.nextmeetings.parameter.displayOnGoingMeetings.name=Afficher les réunions en cours
+rendering.macro.nextmeetings.parameter.displayOnGoingMeetings.description=Afficher les réunions en cours si cette case est cochée.
 
 # Template Provider
 templateProvider.meeting.description=Organiser un événement

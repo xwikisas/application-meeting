@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>macro-fullcalendar-ui</artifactId>
-      <version>2.2.8</version>
+      <version>2.2.11</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
@@ -134,6 +134,18 @@
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-jodatime</artifactId>
       <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Replaces transitive dependency on com.sun.mail:javax.mail from ical4j (macro-fullcalendar-ui) -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Added here because we excluded it as transitive dependency of ical4j (macro-fullcalendar-ui) -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

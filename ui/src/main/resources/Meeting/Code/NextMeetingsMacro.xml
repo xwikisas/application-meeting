@@ -371,19 +371,27 @@
 #set($discard = $xwiki.ssx.use('Meeting.Code.NextMeetingsMacro'))
 #set($limit = $xcontext.macro.params.limit)
 #set($nowDate = $datetool.date)
-#set($query = "from doc.object(Meeting.Code.MeetingClass) as meeting where doc.fullName &lt;&gt; 'Meeting.Code.MeetingTemplate' and meeting.startDate &gt; :date and meeting.status in ('value1','value2') order by meeting.startDate asc")
+
+#set($displayOnGoingMeetings = $xcontext.macro.params.displayOnGoingMeetings)
+#set ($queryDateType = 'endDate')
+#if ($displayOnGoingMeetings == 'false')
+  #set ($queryDateType = 'startDate')
+#end
+
+#set($query = "from doc.object(Meeting.Code.MeetingClass) as meeting where doc.fullName &lt;&gt; 'Meeting.Code.MeetingTemplate' and meeting.${queryDateType} &gt; :date and meeting.status in ('value1','value2') order by meeting.startDate asc")
 #set($results = $services.query.xwql($query).setLimit($limit).bindValue('date', $nowDate).execute())
 ##
 (% class="meetings-next" %)(((
   #foreach($item in $results)
     #set($docReference = $services.model.resolveDocument($item))
     #set($document = $xwiki.getDocument($item))
+    #set($startDate = $document.getValue('startDate'))
     #if($services.security.authorization.hasAccess('view', $docReference))
       (% class="list-unstyled" %)
         #if($xcontext.macro.params.status == 'show')
           #set($status = "- $services.localization.render('contrib.meeting.field.status') : $document.display('status', 'view')")
         #end
-        * $services.icon.render('time')(% class="text-muted" %) [[$document.plainTitle&gt;&gt;$item]] $document.display('startDate','view') $!status
+        * $services.icon.render('time')(% class="text-muted" %) [[$document.plainTitle&gt;&gt;$item]] $document.display('startDate','view') $!status #if ($startDate.compareTo($nowDate) &lt; 0)| {{translation key="meeting.panel.activeMeeting"/}}#end
     #end
   #end
 )))
@@ -399,7 +407,7 @@
       [[$services.localization.render('contrib.meeting.panel.addmeeting')&gt;&gt;Meeting.WebHome||class="homelink"]]
     #end
   #else
-      [[$services.localization.render('contrib.meeting.panel.viewallmeetings')&gt;&gt;Meeting.WebHome||class="homelink"]]
+      [[$services.localization.render('contrib.meeting.panel.viewallmeetings')&gt;&gt;Meeting.WebHome||class="homelink" queryString="view=future"]]
   #end
 #end
 {{/velocity}}</code>
@@ -664,6 +672,84 @@
     </property>
     <property>
       <type/>
+    </property>
+  </object>
+  <object>
+    <name>Meeting.Code.NextMeetingsMacro</name>
+    <number>3</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>7bdb1223-acd5-4fc9-b7a9-ee1c8387e095</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue>true</defaultValue>
+    </property>
+    <property>
+      <description>Display the meetings that are currently on going if checked.</description>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>displayOnGoingMeetings</name>
+    </property>
+    <property>
+      <type>java.lang.Boolean</type>
     </property>
   </object>
 </xwikidoc>

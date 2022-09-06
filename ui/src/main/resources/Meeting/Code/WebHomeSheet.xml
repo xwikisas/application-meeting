@@ -36,41 +36,197 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
+  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
+{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
 
 {{velocity}}
-#set($docextras = [])
-#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
-#set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
-$services.localization.render('contrib.meeting.home.presentation', ['[[**', '**&gt;&gt;Meeting.CalendarView]]'])
-#set ($columnsProperties = {
-  'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
-  'leader': {'type': 'text', 'size': 10, 'html': true},
-  'place': {'type': 'text', 'size': 10},
-  'startDate': {'type': 'text', 'size': 10},
-  'endDate': {'type': 'hidden'},
-  'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
-  'status': {'type': 'list', 'size': 10},
-  '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
-})
-#set ($options = {
-  'className': 'Meeting.Code.MeetingClass',
-  'translationPrefix': 'meeting.livetable.',
-  'tagCloud': true,
-  'rowCount': 15,
-  'selectedColumn': 'startDate'
-})
-#if ($request.getParameter('meeting') == 'all')
-  $services.localization.render('contrib.meeting.home.allMeetingsMessage', ['[[', "&gt;&gt;${doc}]]"])
-  #set ($options.defaultOrder = 'desc')
+#set ($configClassReference = $services.model.createDocumentReference('', ['Meeting', 'Code'], 'ConfigurationClass'))
+#set ($hasLicense = $services.licensing.licensor.hasLicensureForEntity($configClassReference))
+#if (!$hasLicense)
+  {{error}}#getMissingLicenseMessage('meeting.extension.name'){{/error}}
 #else
-  $services.localization.render('contrib.meeting.home.initialMessage', ['[[**', "&gt;&gt;||queryString='meeting=all']]"])
-  #set ($currentDate = $xwiki.jodatime.dateTime.millis)
-  #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1).millis)
-  #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
-  #set ($options.defaultOrder = 'asc')
+  ## Display tabs
+  #set ($discard = $xwiki.jsx.use('Meeting.Code.WebHomeSheet'))
+  #set($view = $request.getParameter('view'))
+  #if("$!{view}" == '')
+    #set ($configClass = "Meeting.Code.ConfigurationClass")
+    #set ($configDoc = $xwiki.getDocument('Meeting.Code.Configuration'))
+    #set ($configObj = $configDoc.getObject($configClass))
+    #set ($view = $configObj.getProperty('defaultTab').getValue())
+    #if("$!{view}" == '')
+      #set ($view = 'past')
+    #end
+  #end
+
+  #set($tabs = [])
+
+  #set($discard = $tabs.add({'tabName' : 'past', 'idSuffix' : 'pastMeetings', 'translationKey' : 'meeting.pastMeetings.title'}))
+  #set($discard = $tabs.add({'tabName' : 'future', 'idSuffix' : 'futureMeetings', 'translationKey' : 'meeting.futureMeetings.title'}))
+  #set($discard = $tabs.add({'tabName' : 'calendar', 'idSuffix' : 'meetingsCalendar', 'translationKey' : 'contrib.meeting.calendarView.title'}))
+
+  {{html clean="false" wiki="true"}}
+  &lt;div&gt;
+    &lt;ul class="nav nav-tabs" role="tablist"&gt;
+    #foreach ($tab in $tabs)
+      &lt;li #if($view == $tab['tabName']) class="active"#end
+        role="presentation" id="xwiki$tab['idSuffix']"&gt;
+        &lt;a href="#$tab['tabName']" aria-controls="$tab['tabName']" role="tab" data-toggle="tab"&gt;
+          $escapetool.xml($services.localization.render($tab['translationKey']))
+        &lt;/a&gt;
+      &lt;/li&gt;
+    #end
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;div class="tab-content"&gt;
+    ## Display Calendar tab.
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'calendar')active#end" id="calendar"&gt;
+      {{include reference='Meeting.CalendarView'/}}
+    &lt;/div&gt;
+    ## Prepare livetable parameters.
+    #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
+    #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
+    #set ($columnsProperties = {
+      'doc.title': {'type': 'text', 'size': 10, 'link': 'view'},
+      'leader': {'type': 'text', 'size': 10, 'html': true},
+      'place': {'type': 'text', 'size': 10},
+      'startDate': {'type': 'text', 'size': 10},
+      'endDate': {'type': 'text', 'size': 10},
+      'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
+      'status': {'type': 'list', 'size': 10},
+      '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
+    })
+    #set ($options = {
+      'className': 'Meeting.Code.MeetingClass',
+      'translationPrefix': 'meeting.livetable.',
+      'tagCloud': true,
+      'rowCount': 15
+    })
+    #set ($currentDate = $xwiki.jodatime.dateTime.millis)
+    #set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
+    ## Display past meetings table.
+    #set ($options.selectedColumn = 'endDate')
+    #set ($options.extraParams = "&amp;endDate=0-${currentDate}")
+    #set ($options.defaultOrder = 'desc')
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'past')active#end" id="past"&gt;
+      #livetable('meetingsPast' $columns $columnsProperties $options)
+    &lt;/div&gt;
+    ## Display future meetings table.
+    #set ($options.selectedColumn = 'startDate')
+    #set ($endDate = $xwiki.jodatime.dateTime.plusYears(1000).millis)
+    #set ($options.extraParams = "&amp;endDate=${currentDate}-${endDate}")
+    #set ($options.defaultOrder = 'asc')
+    &lt;div role="tabpanel" class="tab-pane #if($view == 'future')active#end" id="future"&gt;
+      #livetable('meetingsFuture' $columns $columnsProperties $options)
+    &lt;/div&gt;
+  &lt;/div&gt;
+  {{/html}}
 #end
-#set ($columns = ['doc.title', 'leader', 'place', 'startDate', 'endDate', 'durationDisplay', 'status', '_actions'])
-#livetable('meeting' $columns $columnsProperties $options)
+
 {{/velocity}}</content>
+  <object>
+    <name>Meeting.Code.WebHomeSheet</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>f383138c-b6b7-43c6-b023-7d0a4092829d</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require(['jquery', 'bootstrap'],function($) {
+  $('li#xwikimeetingsCalendar').click(function() {
+    // When clicking on the Calendar tab, the calendar itself is not displayed properly. Resizing the window will
+    // fix it.
+    window.dispatchEvent(new Event('resize'));
+  });
+});</code>
+    </property>
+    <property>
+      <name></name>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
 </xwikidoc>

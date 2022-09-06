@@ -34,7 +34,7 @@
   <version>1.12.2-SNAPSHOT</version>
   <description>Create and manage meetings. See the meetings inside a calendar. Send email invitations to participants. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
-    <licensing.version>1.22</licensing.version>
+    <licensing.version>1.22.1</licensing.version>
   </properties>
   <issueManagement>
     <system>GitHub</system>
@@ -74,4 +74,25 @@
       </snapshots> 
     </repository>
   </repositories>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.mnode.ical4j</groupId>
+        <artifactId>ical4j</artifactId>
+        <version>3.2.1</version>
+        <exclusions>
+          <!-- Banned dependency. Has been replaced with com.sun.mail:jakarta.mail -->
+          <exclusion>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+          </exclusion>
+          <!-- Use the slf4j version bundled in XWiki. -->
+          <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
