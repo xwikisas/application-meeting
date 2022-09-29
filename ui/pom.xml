@@ -49,6 +49,11 @@
     <xwiki.extension.category>application</xwiki.extension.category>
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
+      full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
+    <xwiki.extension.licensing.excludedDocuments>
+      Meeting.Code.Configuration
+    </xwiki.extension.licensing.excludedDocuments>
   </properties>
   <dependencies>
     <dependency>
