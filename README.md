@@ -2,9 +2,9 @@
 
 This is an application for handling meetings.
 
-* Project Lead: [Anca Luca](https://github.com/lucaa)
+* Project Lead: N/A
 * [Documentation](https://store.xwiki.com/xwiki/bin/view/Extension/MeetingApplication)
-* Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [IRC]( http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
+* Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [Chat]( http://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Development Practices](http://dev.xwiki.org)
 * Minimal XWiki version supported: XWiki 11.10
 * License: LGPL 2.1+
