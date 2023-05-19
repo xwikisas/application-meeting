@@ -29,28 +29,31 @@ import org.xwiki.test.docker.junit5.UITest;
  * @version $Id$
  * @since 1.13
  */
-@UITest(
-    properties = {
-        // Needed for database mail sending status storage.
-        "xwikiDbHbmCommonExtraMappings=mailsender.hbm.xml",
+@UITest(sshPorts = {
+    // Open the GreenMail port so that the XWiki instance inside a Docker container can use the SMTP server provided
+    // by GreenMail running on the host.
+    3025 }, properties = {
+    // Add the MailSender plugin used to send mails.
+    "xwikiCfgPlugins=com.xpn.xwiki.plugin.mailsender.MailSenderPlugin",
 
-        // Sending mails requires programming rights.
-        "xwikiPropertiesAdditionalProperties=test.prchecker.excludePattern=.*:Meeting\\.Code\\.SendInvitationEmail",
+    // Sending mails requires programming rights.
+    "xwikiPropertiesAdditionalProperties=test.prchecker.excludePattern=.*:Meeting\\.Code\\.SendInvitationEmail",
 
-        "xwikiCfgPlugins=com.xpn.xwiki.plugin.jodatime.JodaTimePlugin"
-    },
-    extraJARs = {
-        // It needs to be a core extension in order to provide the mailsender.hbm.xml file.
-        "org.xwiki.platform:xwiki-platform-mail-send-storage:11.10",
+    "xwikiCfgPlugins=com.xpn.xwiki.plugin.jodatime.JodaTimePlugin" }, extraJARs = {
+    // The JodaTime plugin needs to be in WEB-INF/lib since it's defined in xwiki.cfg and plugins are loaded by
+    // XWiki at startup, i.e. before extensions are provisioned for the tests.
+    "org.xwiki.platform:xwiki-platform-jodatime:13.10",
 
-        // The JodaTime plugin needs to be in WEB-INF/lib since it's defined in xwiki.cfg and plugins are loaded by
-        // XWiki at startup, i.e. before extensions are provisioned for the tests.
-        "org.xwiki.platform:xwiki-platform-jodatime:11.10",
+    // Needed for the user picker suggestions that are retrieved through REST.
+    "org.xwiki.platform:xwiki-platform-wiki-user-default:13.10",
 
-        // Needed for the user picker suggestions that are retrieved through REST.
-        "org.xwiki.platform:xwiki-platform-wiki-user-default:11.10",
-    }
-)
+    // XWiki needs the mailsender plugin JAR to be present before it starts since it's not an extension and it
+    // cannot be provisioned after XWiki is started!
+    "org.xwiki.platform:xwiki-platform-mailsender:13.10",
+
+    // MailSender plugin uses MailSenderConfiguration from xwiki-platform-mail-api so we need to provide an
+    // implementation for it.
+    "org.xwiki.platform:xwiki-platform-mail-send-default:13.10" }, resolveExtraJARs = true)
 class AllITs
 {
     @Nested

@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Meeting.Code.MeetingTemplate" locale="">
+<xwikidoc version="1.4" reference="Meeting.Code.MeetingTemplate" locale="">
   <web>Meeting.Code</web>
   <name>MeetingTemplate</name>
   <language/>
@@ -300,9 +300,6 @@
       <displayMapError/>
     </property>
     <property>
-      <durationDisplay/>
-    </property>
-    <property>
       <endDate/>
     </property>
     <property>
@@ -313,9 +310,6 @@
     </property>
     <property>
       <leader/>
-    </property>
-    <property>
-      <notes/>
     </property>
     <property>
       <participants/>

@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Meeting.Code.WebHomeSheet" locale="">
+<xwikidoc version="1.4" reference="Meeting.Code.WebHomeSheet" locale="">
   <web>Meeting.Code</web>
   <name>WebHomeSheet</name>
   <language/>
@@ -220,7 +220,7 @@
 });</code>
     </property>
     <property>
-      <name></name>
+      <name/>
     </property>
     <property>
       <parse>0</parse>

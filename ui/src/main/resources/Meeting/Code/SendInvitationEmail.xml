@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Meeting.Code.SendInvitationEmail" locale="">
+<xwikidoc version="1.4" reference="Meeting.Code.SendInvitationEmail" locale="">
   <web>Meeting.Code</web>
   <name>SendInvitationEmail</name>
   <language/>
@@ -62,19 +62,20 @@
     #set ($sender = "$!{escapetool.xml($currentUserName)} &lt;no-reply@xwiki.localdomain.com&gt;")
   #end
   #set ($defaultMail = $xwiki.getXWikiPreference('admin_email', "$sender"))
-  #set ($mailmsg = $services.mailsender.createMessage($defaultMail, $participants.to, $title))
+  #set ($mailmsg = $services.mail.sender.createMessage($defaultMail, $participants.to, $title))
   #set ($discard = $mailmsg.addPart('text/html', "$message &lt;br&gt; &lt;a href=$link&gt; $services.localization.render('contrib.meeting.notification.link') &lt;/a&gt;"))
   #set($vCalendar = '')
   #getVCalendarContent($meetingDoc, $vCalendar)
   #set ($discard = $mailmsg.addPart('text/calendar;method=REQUEST', $vCalendar, {'headers' : {'Content-Class' : 'urn:content-classes:calendarmessage'}}))
   #set ($discard = $mailmsg.setType('Meeting invitation'))
-  #set ($mailResult = $services.mailsender.send([$mailmsg], 'database'))
-  #if ($mailResult &amp;&amp; !$services.mailsender.lastError)
+  #set ($mailResult = $services.mail.sender.send([$mailmsg], 'database'))
+  #if ($mailResult &amp;&amp; !$services.mail.sender.lastError)
     #set ($discard = $meetingDoc.set('lastEmailSent', $datetool.date))
     #set ($discard = $meetingDoc.saveAsAuthor())
     #set ($jsonRes = {'status': 'done', 'notification': "$services.localization.render('contrib.meeting.notification.success')"})
   #else
-    #set ($jsonRes = {'status': 'error', 'notification': "$services.localization.render('contrib.meeting.notification.failure') $exceptiontool.getRootCauseMessage($services.mailsender.lastError)"})
+    #set ($jsonRes = {'status': 'error', 'notification':
+    "$services.localization.render('contrib.meeting.notification.failure') $exceptiontool.getRootCauseMessage($services.mail.sender.lastError)"})
     #set ($discard = $response.setStatus(500))
   #end
     $jsontool.serialize($jsonRes)

@@ -23,17 +23,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryInlinePage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryPage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingHomePage;
+import org.xwiki.test.docker.junit5.TestConfiguration;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.CreatePagePage;
 
-import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,55 +41,39 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * UI tests for the Meeting application feature.
- * 
+ *
  * @since 1.13
  */
 @UITest
 public class MeetingIT
 {
-    private GreenMail mail;
-
-    @BeforeEach
-    public void startMail()
-    {
-        this.mail = new GreenMail(ServerSetupTest.SMTP);
-        this.mail.start();
-    }
-
-    @AfterEach
-    public void stopMail()
-    {
-        if (this.mail != null) {
-            this.mail.stop();
-        }
-    }
+    @RegisterExtension
+    static GreenMailExtension mail = new GreenMailExtension(ServerSetupTest.SMTP);
 
     @Test
-    public void sendMeetingInvitation(TestUtils setup) throws Exception
+    public void sendMeetingInvitation(TestUtils setup, TestConfiguration config) throws Exception
     {
         setup.loginAsSuperAdmin();
-        
+
         // Configure the SMTP host/port for the wiki so that it points to GreenMail.
-        setup.addObject("Mail", "MailConfig", "Mail.SendMailConfigClass");
-        setup.updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "port", 3025);
-        setup.updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "host", "localhost");
+        configureEmail(setup, config);
 
         // Create some participants to meetings
-        setup.createUser("participant1", "password", setup.getURLToNonExistentPage(), "email",
-            "participant1@xwiki.org", "first_name", "participant1", "last_name", "Doe");
-        setup.createUser("participant2", "password", setup.getURLToNonExistentPage(), "email",
-            "participant2@xwiki.org", "first_name", "participant2", "last_name", "Doe");
+        setup.createUser("participant1", "password", setup.getURLToNonExistentPage(), "email", "participant1@xwiki.org",
+            "first_name", "participant1", "last_name", "Doe");
+        setup.createUser("participant2", "password", setup.getURLToNonExistentPage(), "email", "participant2@xwiki.org",
+            "first_name", "participant2", "last_name", "Doe");
 
         // Create user to be Leader of meeting
-        setup.createUserAndLogin("JohnDoe", "password", "email", "john@xwiki.org", "first_name", "John",
-            "last_name", "Doe");
+        setup.createUserAndLogin("JohnDoe", "password", "email", "john@xwiki.org", "first_name", "John", "last_name",
+            "Doe");
 
         // Remove existing meeting
         setup.deletePage("Meeting", "Meeting 01");
 
         // Create new meeting
         MeetingHomePage meetingHomePage = MeetingHomePage.gotoPage();
-        
+
         CreatePagePage createPage = meetingHomePage.createPage();
         createPage.getDocumentPicker().setTitle("Meeting 01");
         createPage.setTemplate("Meeting.Code.MeetingTemplateProvider");
@@ -114,21 +98,21 @@ public class MeetingIT
         MeetingEntryPage meetingEntryPage = new MeetingEntryPage();
 
         // Send invitation message
-        meetingEntryPage.setMessage("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy " +
-            "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua");
+        meetingEntryPage.setMessage("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy "
+            + "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua");
         meetingEntryPage.sendMessage();
 
         // Verify that the mail has been sent.
         assertTrue(meetingEntryPage.getNotification()
             .contains("A notification email has successfully been sent to the participants."));
-        
+
         // Verify that the mail has been received.
-        this.mail.waitForIncomingEmail(10000L, 2);
-        assertEquals(2, this.mail.getReceivedMessages().length);
+        mail.waitForIncomingEmail(10000L, 2);
+        assertEquals(2, mail.getReceivedMessages().length);
         assertEquals("You are invited to participate in a meeting: Meeting 01",
-            this.mail.getReceivedMessages()[0].getSubject());
+            mail.getReceivedMessages()[0].getSubject());
         assertEquals("You are invited to participate in a meeting: Meeting 01",
-            this.mail.getReceivedMessages()[1].getSubject());
+            mail.getReceivedMessages()[1].getSubject());
     }
 
     private String getDateTomorrow()
@@ -145,5 +129,11 @@ public class MeetingIT
         calendar.add(Calendar.DATE, 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return dateFormat.format(calendar.getTime());
+    }
+
+    private void configureEmail(TestUtils setup, TestConfiguration testConfiguration)
+    {
+        setup.updateObject("Mail", "MailConfig", "Mail.SendMailConfigClass", 0, "host",
+            testConfiguration.getServletEngine().getHostIP(), "port", "3025", "sendWaitTime", "0");
     }
 }

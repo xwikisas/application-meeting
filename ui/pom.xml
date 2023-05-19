@@ -78,7 +78,7 @@
     <dependency>
       <groupId>com.xwiki.xpoll</groupId>
       <artifactId>application-xpoll-ui</artifactId>
-      <version>2.1.5</version>
+      <version>2.2</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
@@ -154,4 +154,17 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.xwiki.commons</groupId>
+        <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
+        <configuration>
+          <contentPages>
+            <contentPage>.*/Meeting/WebHome\.xml</contentPage>
+          </contentPages>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

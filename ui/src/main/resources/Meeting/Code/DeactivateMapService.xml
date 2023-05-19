@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Meeting.Code.DeactivateMapService" locale="">
+<xwikidoc version="1.4" reference="Meeting.Code.DeactivateMapService" locale="">
   <web>Meeting.Code</web>
   <name>DeactivateMapService</name>
   <language/>
