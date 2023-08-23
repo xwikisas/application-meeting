@@ -75,16 +75,7 @@
   #set($discard = $doc.saveAsAuthor())
   #setPollName()
   #set($newPollReference = $services.model.createDocumentReference('', 'XPoll', $pollName))
-  #if($!{request.queryString} != '')
-    #set($op = '&amp;')
-  #else
-    #set($op = '')
-  #end
-  #set($tokenParam = '')
-  #if($!services.csrf.getToken() != '')
-    #set($tokenParam = "$!{op}form_token=$services.csrf.getToken()")
-  #end
-  $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}$!tokenParam"))
+  $response.sendRedirect($xwiki.getURL($newPollReference, 'edit', "$!{request.queryString}"))
 #end
 ##if ($doc.getObject('Meeting.Code.MeetingClass'))
 #set ($obj = $doc.getObject('Meeting.Code.MeetingClass'))
@@ -243,6 +234,7 @@
               &lt;input type='hidden' name='createPoll' value='true'&gt;
               &lt;input type="hidden" name="parent" value="Meeting.WebHome" /&gt;
               &lt;input type="hidden" name="template" value="XPoll.XPollTemplate" /&gt;
+              &lt;input type='hidden' name='form_token' value="$services.csrf.getToken()" /&gt;
               &lt;span class='buttonwrapper'&gt;
                 &lt;input type='submit' class='button'
                     value="$services.localization.render('contrib.meeting.createPoll')"/&gt;
