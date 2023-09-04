@@ -234,6 +234,7 @@
               &lt;input type='hidden' name='createPoll' value='true'&gt;
               &lt;input type="hidden" name="parent" value="Meeting.WebHome" /&gt;
               &lt;input type="hidden" name="template" value="XPoll.XPollTemplate" /&gt;
+              &lt;input type='hidden' name='form_token' value="$!{services.csrf.getToken()}" /&gt;
               &lt;span class='buttonwrapper'&gt;
                 &lt;input type='submit' class='button'
                     value="$services.localization.render('contrib.meeting.createPoll')"/&gt;
