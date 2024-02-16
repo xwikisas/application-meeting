@@ -36,14 +36,13 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
-{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
+  <content>{{include reference="Meeting.Code.Migrations.MigrationMacros"/}}
 
 {{velocity}}
 #set ($configClassReference = $services.model.createDocumentReference('', ['Meeting', 'Code'], 'ConfigurationClass'))
 #set ($hasLicense = $services.licensing.licensor.hasLicensureForEntity($configClassReference))
 #if (!$hasLicense)
-  {{error}}#getMissingLicenseMessage('meeting.extension.name'){{/error}}
+  {{missingLicenseMessage extensionName="meeting.extension.name"/}}
 #else
   ## Display tabs
   #set ($discard = $xwiki.jsx.use('Meeting.Code.WebHomeSheet'))
