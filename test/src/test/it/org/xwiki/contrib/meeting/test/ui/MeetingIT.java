@@ -28,6 +28,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryInlinePage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingEntryPage;
 import org.xwiki.contrib.meeting.test.ui.po.MeetingHomePage;
+import org.xwiki.test.docker.junit5.ExtensionOverride;
 import org.xwiki.test.docker.junit5.TestConfiguration;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
@@ -44,7 +45,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @since 1.13
  */
-@UITest
+@UITest(
+    extensionOverrides = {
+        @ExtensionOverride(
+            extensionId = "com.google.code.findbugs:jsr305",
+            overrides = {
+                "features=com.google.code.findbugs:annotations"
+            }
+        )
+    }
+)
 public class MeetingIT
 {
     @RegisterExtension
