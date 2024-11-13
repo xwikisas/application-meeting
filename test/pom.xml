@@ -59,6 +59,13 @@
       <version>${licensing.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Remove when licensing application has the parent to 14.10. -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-test-docker</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <!-- End remove. -->
     <!-- Used to configure the mail sender. -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
