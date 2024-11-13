@@ -42,18 +42,18 @@ import org.xwiki.test.docker.junit5.UITest;
     "xwikiCfgPlugins=com.xpn.xwiki.plugin.jodatime.JodaTimePlugin" }, extraJARs = {
     // The JodaTime plugin needs to be in WEB-INF/lib since it's defined in xwiki.cfg and plugins are loaded by
     // XWiki at startup, i.e. before extensions are provisioned for the tests.
-    "org.xwiki.platform:xwiki-platform-jodatime:13.10",
+    "org.xwiki.platform:xwiki-platform-jodatime:14.10-1",
 
     // Needed for the user picker suggestions that are retrieved through REST.
-    "org.xwiki.platform:xwiki-platform-wiki-user-default:13.10",
+    "org.xwiki.platform:xwiki-platform-wiki-user-default:14.10-1",
 
     // XWiki needs the mailsender plugin JAR to be present before it starts since it's not an extension and it
     // cannot be provisioned after XWiki is started!
-    "org.xwiki.platform:xwiki-platform-mailsender:13.10",
+    "org.xwiki.platform:xwiki-platform-mailsender:14.10-1",
 
     // MailSender plugin uses MailSenderConfiguration from xwiki-platform-mail-api so we need to provide an
     // implementation for it.
-    "org.xwiki.platform:xwiki-platform-mail-send-default:13.10" }, resolveExtraJARs = true)
+    "org.xwiki.platform:xwiki-platform-mail-send-default:14.10-1" }, resolveExtraJARs = true)
 class AllITs
 {
     @Nested
