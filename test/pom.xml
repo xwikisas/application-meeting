@@ -53,16 +53,23 @@
       </exclusions>
     </dependency>
     <!-- Use a fake licensor script service while running the functional tests. -->
+    <!-- Remove when licensing application has the parent to 14.10. -->
+    <!-- Add this back:
     <dependency>
       <groupId>com.xwiki.licensing</groupId>
       <artifactId>application-licensing-test-api</artifactId>
       <version>${licensing.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- Remove when licensing application has the parent to 14.10. -->
+    -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-test-docker</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-user-api</artifactId>
       <version>${platform.version}</version>
     </dependency>
     <!-- End remove. -->
