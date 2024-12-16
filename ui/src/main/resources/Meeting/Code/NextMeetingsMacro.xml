@@ -448,9 +448,6 @@
       <defaultCategories/>
     </property>
     <property>
-      <defaultCategory/>
-    </property>
-    <property>
       <description>Displays a defined number of upcoming meetings</description>
     </property>
     <property>
