@@ -27,7 +27,7 @@
     <artifactId>application-meeting</artifactId>
     <version>1.14.4-SNAPSHOT</version>
   </parent>
-  <artifactId>application-meeting-test</artifactId>
+  <artifactId>application-meeting-test-docker</artifactId>
   <name>Meeting Application - Test</name>
   <properties>
     <!-- Functional tests are allowed to output content to the console -->
@@ -59,6 +59,28 @@
       <version>${licensing.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Remove when licensing application has the parent to 14.10. -->
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-extension-api</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-test-docker</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-user-api</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-model-api</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <!-- End remove. -->
     <!-- Used to configure the mail sender. -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
