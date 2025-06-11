@@ -20,4 +20,4 @@
 # 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 # ---------------------------------------------------------------------------
 
-mvn release:prepare -U -DautoVersionSubmodules=true -Pintegration-tests,docker,quality -DskipTests=true -Darguments="-DskipTests=true" && mvn release:perform -Pintegration-tests,docker,quality -DskipTests=true -Darguments="-DskipTests=true"
+mvn release:prepare -U -DautoVersionSubmodules=true -Pdocker,quality -DskipTests=true -Darguments="-DskipTests=true" && mvn release:perform -Pdocker,quality -DskipTests=true -Darguments="-DskipTests=true"
