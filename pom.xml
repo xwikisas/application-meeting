@@ -90,6 +90,16 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
           </exclusion>
+          <!-- Use the commons-lang3 version bundled in XWiki. -->
+          <exclusion>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+          </exclusion>
+          <!-- Use the commons-codec version bundled in XWiki. -->
+          <exclusion>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+          </exclusion>
           <!-- Use the slf4j version bundled in XWiki. -->
           <exclusion>
             <groupId>org.slf4j</groupId>
