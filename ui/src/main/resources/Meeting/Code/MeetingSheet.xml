@@ -224,7 +224,7 @@
     (% class="col-xs-12" %)
     (((
       ## poll
-      #if($doc.isCurrentUserCreator() &amp;&amp; $xwiki.exists('XPoll.WebHome')
+      #if($hasAdmin &amp;&amp; $xwiki.exists('XPoll.WebHome')
           &amp;&amp; $doc.getValue('status') == 'value1' &amp;&amp; $xcontext.action == 'view')
         #setPollName()
         #checkHasPoll($pollName)
