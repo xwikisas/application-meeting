@@ -92,7 +92,7 @@
       'startDate': {'type': 'text', 'size': 10},
       'endDate': {'type': 'text', 'size': 10},
       'durationDisplay': {'type': 'text', 'filterable': true, 'sortable': false, 'html': true},
-      'status': {'type': 'list', 'size': 10},
+      'status': {'type': 'list', 'size': 10, 'sortable': false},
       '_actions': {'sortable': false, 'filterable': false, 'html': true, 'actions': ['delete', 'edit']}
     })
     #set ($options = {
