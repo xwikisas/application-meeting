@@ -506,7 +506,7 @@ if(displayMap) {
   $(document).ready(function() {
     var notifForm = $("#sendNotification");
     var notifSubmitInput = notifForm.find("input[type='submit']");
-    notifForm.submit(function(event) {
+    notifForm.on('submit', function(event) {
       event.preventDefault();
       $.ajax({
         type: $(this).attr('method'),
@@ -671,7 +671,7 @@ if(displayMap) {
     // Validate the start and end dates whenever the corresponding date inputs lose the focus.
     var startDate = $('#Meeting\\.Code\\.MeetingClass_0_startDate');
     var endDate = $('#Meeting\\.Code\\.MeetingClass_0_endDate');
-    startDate.add(endDate).blur(function() {
+    startDate.add(endDate).on('blur', function() {
       validateEndDate(startDate.val(), endDate.val(), moment);
     });
   };

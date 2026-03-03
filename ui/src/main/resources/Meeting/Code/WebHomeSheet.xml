@@ -212,7 +212,7 @@
     </property>
     <property>
       <code>require(['jquery', 'bootstrap'],function($) {
-  $('li#xwikimeetingsCalendar').click(function() {
+  $('li#xwikimeetingsCalendar').on('click', function() {
     // When clicking on the Calendar tab, the calendar itself is not displayed properly. Resizing the window will
     // fix it.
     window.dispatchEvent(new Event('resize'));
